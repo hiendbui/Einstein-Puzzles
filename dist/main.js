@@ -21,6 +21,66 @@ eval("/* build: `node build.js modules=ALL exclude=gestures,accessors requirejs 
 
 /***/ }),
 
+/***/ "./src/clue.js":
+/*!*********************!*\
+  !*** ./src/clue.js ***!
+  \*********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Clue\n/* harmony export */ });\nclass Clue {\n    constructor(text,pos) {\n        this.text = text;\n        this.pos = pos;\n        this.color;\n    }\n\n    draw(canvas) {\n        const clue = new fabric.Text(this.text,{ fontSize: 14, fontFamily:'fantasy',left: this.pos[0], top: this.pos[1], stroke: this.color})\n        canvas.add(clue);\n    }\n}\n// Person #3 lives in the Color#3 house.\n// Person #5 keeps a dog as a pet.\n// Person #2 drinks Drink#2.\n// The Color#4 house is exactly to the left of the Color#5 house.\n// The owner of the Color#4 house drinks drink#4.\n// The person who eats Food#3 keeps a bird as a pet.\n// The owner of the Color#1 house eats Food#1.\n// The person living in the center house drinks Drink#3.\n// Person#1 lives in the first house.\n// The person who eats Food#2 lives next to the one who keeps a cat as a pet.\n// The person who keeps a horse as a pet lives next to the person who eats Food#1.\n// The person who eats Food#5 drinks Drink#5.\n// Person#4 eats Food #4.\n// Person#1 lives next to the Color#2 house.\n// The person who eats Food#2 has a neighbour who drinks Drink#1.\n\n//# sourceURL=webpack:///./src/clue.js?");
+
+/***/ }),
+
+/***/ "./src/drink.js":
+/*!**********************!*\
+  !*** ./src/drink.js ***!
+  \**********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Drink\n/* harmony export */ });\nclass Drink {\n    constructor(type,pos) {\n        this.type = type\n        this.pos = pos;\n    }\n\n    draw(canvas) {\n        let that = this;\n        fabric.Image.fromURL(`../assets/images/drinks/${this.type}.png`, function(img) {\n            img.scale(.2)\n            img.set('hasControls', false)\n            img.set('left', that.pos[0])\n            img.set('top', that.pos[1])\n            img.set('index', 9999)\n            canvas.add(img);\n            \n            img.on('moving', () => {\n                that.updatePos([img.left,img.top])\n                \n                console.log(that.pos)\n            })\n        });\n    }\n\n    updatePos(pos) {\n        this.pos = pos\n    }\n}\n\n//# sourceURL=webpack:///./src/drink.js?");
+
+/***/ }),
+
+/***/ "./src/food.js":
+/*!*********************!*\
+  !*** ./src/food.js ***!
+  \*********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Food\n/* harmony export */ });\nclass Food {\n    constructor(type,pos) {\n        this.type = type\n        this.pos = pos;\n    }\n\n    draw(canvas) {\n        let that = this;\n        fabric.Image.fromURL(`../assets/images/foods/${this.type}.png`, function(img) {\n            img.scale(.2)\n            img.set('hasControls', false)\n            img.set('left', that.pos[0])\n            img.set('top', that.pos[1])\n            canvas.add(img);\n            \n            img.on('moving', () => {\n                that.updatePos([img.left,img.top])\n                \n                console.log(that.pos)\n            })\n        });\n    }\n\n    updatePos(pos) {\n        this.pos = pos\n    }\n}\n\n//# sourceURL=webpack:///./src/food.js?");
+
+/***/ }),
+
+/***/ "./src/game.js":
+/*!*********************!*\
+  !*** ./src/game.js ***!
+  \*********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Game\n/* harmony export */ });\n/* harmony import */ var _object_container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./object_container */ \"./src/object_container.js\");\n/* harmony import */ var _house__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./house */ \"./src/house.js\");\n/* harmony import */ var _person__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./person */ \"./src/person.js\");\n/* harmony import */ var _pet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pet */ \"./src/pet.js\");\n/* harmony import */ var _drink__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./drink */ \"./src/drink.js\");\n/* harmony import */ var _food__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./food */ \"./src/food.js\");\n/* harmony import */ var _clue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./clue */ \"./src/clue.js\");\n\n\n\n\n\n\n\n\nclass Game {\n    constructor(canvas) {\n        this.canvas = canvas;\n        this.colors = [];\n        this.names = [];\n        this.foods = [];\n        this.drinks = [];\n        this.pets = [];\n    }\n\n    start(canvas){\n        this.createHouses(canvas)\n            \n        const colors = ['transparent', 'blue', 'green', 'red', 'white', 'yellow' ]    \n        const names = ['joe', 'michelle', 'mike', 'vanessa', 'walker']\n            \n        let x = 50;\n        names.forEach(name => {\n          const person = new _person__WEBPACK_IMPORTED_MODULE_2__.default(name,[x, 275])\n          person.draw(canvas);\n          x += 50\n        });\n    \n        x= 325\n        const pets = ['bird', 'fish', 'cat',  'dog', 'horse']\n        pets.forEach(type => {\n        \n          const pet = new _pet__WEBPACK_IMPORTED_MODULE_3__.default(type,[x, 250])\n          pet.draw(canvas);\n          x+=50\n        });\n    \n        x= 325\n        const foods = ['burgers', 'sushi', 'pizza',  'tacos', 'spaghetti',]\n        foods.forEach(type => {\n          const food = new _food__WEBPACK_IMPORTED_MODULE_5__.default(type, [x, 310])\n          food.draw(canvas);\n          x+=50\n        });\n    \n        x= 325\n        const drinks = ['beer', 'boba', 'coffee', 'wine','tea']\n        drinks.forEach(type => {\n          const drink = new _drink__WEBPACK_IMPORTED_MODULE_4__.default(type, [x, 370])\n          drink.draw(canvas);\n          x+=50\n        });\n\n        const text = \"Each house displayed has a unique color and a person \\nliving in it. Each person has a specific pet they own, a \\ndistinct type of food they like, an exclusive favorite drink. \\nUse the clues below to place each item with the correct \\nhouse and click on the house to change it to its \\nappropriate color.\"\n        const instructions = new fabric.Text(text,{ fontSize: 18, fontFamily:'fantasy',top:260, left: 625 })\n        canvas.add(instructions)\n\n        const realColors = [...colors].slice(1)\n        this.shuffle(realColors)\n        this.shuffle(names);\n        this.shuffle(foods);\n        this.shuffle(drinks);\n        this.addClues(realColors, names, foods, drinks);\n    }\n\n    addClues(colors, names,foods,drinks) {\n        const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));\n        const clues = [\n            `The person who keeps a horse as a pet lives next to the person who eats ${foods[0]}.`,\n            `The person who eats ${foods[1]} lives next to the one who keeps a cat as a pet.`,\n            `The ${colors[3]} house is exactly to the left of the ${colors[4]} house.`,\n            `The person who eats ${foods[1]} has a neighbour who drinks ${drinks[0]}.`,\n            `The person living in the center house drinks ${drinks[2]}.`,\n            `The owner of the ${colors[3]} house drinks ${drinks[3]}.`,\n            `The owner of the ${colors[0]} house eats ${foods[1-1]}.`,\n            `The person who eats ${foods[2]} keeps a bird as a pet.`,\n            `The person who eats ${foods[4]} drinks ${drinks[4]}.`,\n            `${namesCap[0]} lives next to the ${colors[1]} house.`,\n            `${namesCap[2]} lives in the ${colors[2]} house.`,\n            `${namesCap[4]} keeps a dog as a pet.`,\n            `${namesCap[1]} drinks ${drinks[1]}.`,\n            `${namesCap[0]} lives in the first house.`,\n            `${namesCap[3]} eats ${foods[3]}.`,\n        ];\n\n        let y = 440\n        clues = clues.map((clue, idx) => {\n            if (idx < 5) {\n                new _clue__WEBPACK_IMPORTED_MODULE_6__.default(clue,[25, y]).draw(this.canvas);\n                y += 20;\n            } else if (idx > 9) {\n                new _clue__WEBPACK_IMPORTED_MODULE_6__.default(clue,[880,y]).draw(this.canvas);\n                y += 20;\n            } else {\n                new _clue__WEBPACK_IMPORTED_MODULE_6__.default(clue,[545,y]).draw(this.canvas);\n                y += 20\n            }\n\n            if (y === 540) y = 440;\n        })\n        \n    }\n    createHouses(canvas) {\n        const colors = ['transparent', 'blue', 'green', 'red', 'white', 'yellow' ]\n        new _house__WEBPACK_IMPORTED_MODULE_1__.default([100, 40],\"transparent\", colors, '1').draw(canvas)\n        new _object_container__WEBPACK_IMPORTED_MODULE_0__.default([60,35]).draw(canvas)\n        new _house__WEBPACK_IMPORTED_MODULE_1__.default([300, 40], \"transparent\", colors, '2').draw(canvas)\n        new _object_container__WEBPACK_IMPORTED_MODULE_0__.default([260,35]).draw(canvas)\n        new _house__WEBPACK_IMPORTED_MODULE_1__.default([500, 40], \"transparent\", colors, '3').draw(canvas)\n        new _object_container__WEBPACK_IMPORTED_MODULE_0__.default([460,35]).draw(canvas)\n        new _house__WEBPACK_IMPORTED_MODULE_1__.default([700, 40],\"transparent\", colors, '4').draw(canvas)\n        new _object_container__WEBPACK_IMPORTED_MODULE_0__.default([660,35]).draw(canvas)\n        new _house__WEBPACK_IMPORTED_MODULE_1__.default([900, 40],\"transparent\", colors, '5').draw(canvas) \n        new _object_container__WEBPACK_IMPORTED_MODULE_0__.default([860,35]).draw(canvas)\n    }\n\n    shuffle(arr) {\n        for(let i = arr.length - 1; i > 0; i--){\n            const j = Math.floor(Math.random() * i)\n            const temp = arr[i]\n            arr[i] = arr[j]\n            arr[j] = temp\n        }\n        return arr\n    }\n}\n\n//# sourceURL=webpack:///./src/game.js?");
+
+/***/ }),
+
 /***/ "./src/house.js":
 /*!**********************!*\
   !*** ./src/house.js ***!
@@ -32,7 +92,7 @@ eval("/* build: `node build.js modules=ALL exclude=gestures,accessors requirejs 
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ House\n/* harmony export */ });\n// import { fabric } from \"fabric\";\n\nclass House {\n    constructor(pos, color, colors) {\n        this.pos = pos;\n        this.color = color;\n        this.colors = colors;\n    }\n\n    draw(canvas) {\n        \n        const base = new fabric.Rect({\n            left: 10,\n            top:50,\n            width: 100,\n            height: 75,\n            fill: this.color,\n            stroke: \"black\"\n        })\n\n        const roof = new fabric.Triangle({\n            left: 0, \n            top: 0,\n            width: 120, \n            height: 50, \n            fill: this.color, \n            stroke: \"black\"\n        })\n        const door =  new fabric.Rect({\n            left: 25,\n            top: 85,\n            width: 25,\n            height: 40,\n            fill: \"#8b4513\",\n            stroke: \"black\"\n        })\n        \n        const handle = new fabric.Circle({\n            radius:2,\n            left: 26,\n            top: 105,\n            fill: \"gold\",\n            stroke: \"black\"\n        })\n\n        const window = new fabric.Rect({\n            left: 70,\n            top: 80,\n            width: 25,\n            height: 25,\n            fill: \"#E0FFFF\",\n            stroke: \"black\"\n        })\n\n        \n        const house = new fabric.Group([base, roof, door, handle, window], {\n            left: this.pos[0],\n            top: this.pos[1]\n        })\n        house.set('selectable', false);\n        house.set('hoverCursor', \"pointer\");\n        canvas.add(house)\n\n\n        house.on('mousedown', () => {\n            this.changeColor()\n            canvas.remove(house)\n            this.draw(canvas)\n        })\n        \n        // ctx.lineWidth = 5\n        \n        // ctx.strokeRect(this.pos[0], this.pos[1], 100, 75)\n\n    \n        // ctx.fillStyle= \"#8b4513\"\n        // ctx.fillRect(this.pos[0]+37.5, this.pos[1]+ 50, 25, 50);\n    }\n\n    changeColor() {\n        this.color = this.colors[this.colors.indexOf(this.color) + 1] //change color to next color in arr\n    }\n}\n\n//# sourceURL=webpack:///./src/house.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ House\n/* harmony export */ });\n// import { fabric } from \"fabric\";\n\nclass House {\n    constructor(pos, color, colors, num) {\n        this.pos = pos;\n        this.color = color;\n        this.colors = colors;\n        this.num = num\n    }\n\n    draw(canvas) {\n        const number = new fabric.Text(`House #${this.num}`, { left: 29, top: -20, fontSize: 15, fontFamily:\"sans-serif\" });\n        \n        const base = new fabric.Rect({\n            left: 10,\n            top:50,\n            width: 100,\n            height: 60,\n            fill: this.color,\n            stroke: \"black\"\n        })\n\n        const roof = new fabric.Triangle({\n            left: 0, \n            top: 10,\n            width: 120, \n            height: 40, \n            fill: this.color, \n            stroke: \"black\"\n        })\n        const door =  new fabric.Rect({\n            left: 25,\n            top: 70,\n            width: 25,\n            height: 40,\n            fill: \"#8b4513\",\n            stroke: \"black\"\n        })\n        \n        const handle = new fabric.Circle({\n            radius:2,\n            left: 26,\n            top: 90,\n            fill: \"gold\",\n            stroke: \"black\"\n        })\n\n        const window = new fabric.Rect({\n            left: 70,\n            top: 65,\n            width: 25,\n            height: 25,\n            fill: \"#E0FFFF\",\n            stroke: \"black\"\n        })\n\n        \n        const house = new fabric.Group([base, roof, door, handle, window], {\n            left: this.pos[0],\n            top: this.pos[1], \n            index:-1\n        })\n        house.set('selectable', false);\n        house.set('hoverCursor', \"pointer\");\n        canvas.add(house)\n        house.sendToBack();\n        \n        \n        \n        \n        house.on('mousedown', () => {\n            this.changeColor()\n            canvas.remove(house)\n            this.draw(canvas) \n            \n        })\n        // ctx.lineWidth = 5\n        \n        // ctx.strokeRect(this.pos[0], this.pos[1], 100, 75)\n\n    \n        // ctx.fillStyle= \"#8b4513\"\n        // ctx.fillRect(this.pos[0]+37.5, this.pos[1]+ 50, 25, 50);\n    }\n\n    changeColor() {\n        this.color = this.colors[this.colors.indexOf(this.color) + 1] //change color to next color in arr\n        \n    }\n}\n\n//# sourceURL=webpack:///./src/house.js?");
 
 /***/ }),
 
@@ -46,7 +106,52 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var fabric__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fabric */ \"./node_modules/fabric/dist/fabric.js\");\n/* harmony import */ var fabric__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fabric__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _house__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./house */ \"./src/house.js\");\n\n\n\nwindow.addEventListener('DOMContentLoaded', () => {\n \n  \n  \n  const canvas = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Canvas(\"game-canvas\", {\n    backgroundColor: '#E8E8E8',\n  })\n  \n  canvas.selection = false\n  \n  const colors = ['transparent', 'blue', 'green', 'red', 'white', 'yellow' ]\n  new _house__WEBPACK_IMPORTED_MODULE_1__.default([250, 50], \"transparent\", colors).draw(canvas)\n  new _house__WEBPACK_IMPORTED_MODULE_1__.default([400, 50], \"transparent\", colors).draw(canvas)\n  new _house__WEBPACK_IMPORTED_MODULE_1__.default([550, 50],\"transparent\", colors).draw(canvas)\n  fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Image.fromURL('https://geeme.now.sh/people/svg/gee_me_062.svg', function(oImg) {\n  canvas.add(oImg);\n});\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var fabric__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fabric */ \"./node_modules/fabric/dist/fabric.js\");\n/* harmony import */ var fabric__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fabric__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _object_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./object_container */ \"./src/object_container.js\");\n/* harmony import */ var _house__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./house */ \"./src/house.js\");\n/* harmony import */ var _person__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./person */ \"./src/person.js\");\n/* harmony import */ var _pet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pet */ \"./src/pet.js\");\n/* harmony import */ var _drink__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./drink */ \"./src/drink.js\");\n/* harmony import */ var _food__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./food */ \"./src/food.js\");\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./game */ \"./src/game.js\");\n\n\n\n\n\n\n\n\n\nwindow.addEventListener('DOMContentLoaded', () => {\n \n  \n  \n  const canvas = new fabric__WEBPACK_IMPORTED_MODULE_0__.fabric.Canvas(\"game-canvas\", {\n    backgroundColor: '#E8E8E8',\n  })\n  \n  canvas.selection = false\n  canvas.preserveObjectStacking = true;\n  const game = new _game__WEBPACK_IMPORTED_MODULE_7__.default(canvas)\n  game.start(canvas);  \n\n    \n  \n});\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/object_container.js":
+/*!*********************************!*\
+  !*** ./src/object_container.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ ObjectContainer\n/* harmony export */ });\nclass ObjectContainer {\n    constructor(pos) {\n        this.pos = pos;\n    }\n\n    draw(canvas) {\n        const container = new fabric.Rect({\n            left: this.pos[0],\n            top: this.pos[1],\n            width: 200,\n            height: 200,\n            stroke: \"black\",\n            fill: \"transparent\",\n        })\n\n        container.set('selectable', false);\n        container.set('hoverCursor','default');\n        canvas.add(container)\n        container.sendToBack();\n        container.on('mouseover', () => {\n            container.sendToBack()\n        })\n        container.on('mousedown', () => {\n            container.sendToBack()\n        })\n        \n        container.on('mouseup', () => {\n            container.sendToBack()\n        })\n    }\n}\n\n//# sourceURL=webpack:///./src/object_container.js?");
+
+/***/ }),
+
+/***/ "./src/person.js":
+/*!***********************!*\
+  !*** ./src/person.js ***!
+  \***********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Person\n/* harmony export */ });\nclass Person {\n    constructor(name,pos) {\n        this.name = name;\n        this.pos = pos;\n        \n    }\n\n    draw(canvas) {\n        let that = this;\n        const name = new fabric.Text(this.name[0].toUpperCase() + this.name.slice(1), { top: -12.5, fontSize: 10, fontFamily:'fantasy' });\n        \n        fabric.Image.fromURL(`../assets/images/people/${this.name}.svg`, function(img) {\n            img.scale(0.08)\n\n           \n            const obj = new fabric.Group([img, name], {\n                left: that.pos[0],\n                top: that.pos[1],\n                \n            })\n            obj.set('hasControls', false)\n            canvas.add(obj);\n            \n            obj.on('moving', () => {\n                that.updatePos([obj.left,obj.top])\n                console.log(that.pos)\n            })\n        });\n    }\n\n    updatePos(pos) {\n        this.pos = pos\n    }\n}\n\n//# sourceURL=webpack:///./src/person.js?");
+
+/***/ }),
+
+/***/ "./src/pet.js":
+/*!********************!*\
+  !*** ./src/pet.js ***!
+  \********************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => /* binding */ Pet\n/* harmony export */ });\nclass Pet {\n    constructor(type,pos) {\n        this.type = type\n        this.pos = pos;\n    }\n\n    draw(canvas) {\n        let that = this;\n        fabric.Image.fromURL(`../assets/images/pets/${this.type}.png`, function(img) {\n            img.scale(.2)\n            img.set('left', that.pos[0])\n            img.set('top', that.pos[1])\n            img.set('hasControls', false)\n            canvas.add(img);\n            img.on('moving', () => {\n                that.updatePos([img.left,img.top])\n                console.log(that.pos)\n            })\n        });\n    }\n\n    updatePos(pos) {\n        this.pos = pos\n    }\n}\n\n//# sourceURL=webpack:///./src/pet.js?");
 
 /***/ }),
 
