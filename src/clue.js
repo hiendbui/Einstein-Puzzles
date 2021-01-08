@@ -6,8 +6,10 @@ export default class Clue {
     }
 
     draw(canvas) {
-        const clue = new fabric.Text(this.text,{ fontSize: 14, fontFamily:'fantasy',left: this.pos[0], top: this.pos[1], stroke: this.color})
+        const clue = new fabric.Text(this.text,{ fontSize: 15.75, fontFamily:'Lucida Sans',left: this.pos[0], top: this.pos[1], stroke: this.color})
         canvas.add(clue);
+        clue.set('selectable', false);
+        clue.set('hoverCursor', "default");
     }
 }
 // Person #3 lives in the Color#3 house.
