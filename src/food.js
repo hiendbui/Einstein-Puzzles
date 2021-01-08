@@ -13,7 +13,7 @@ export default class Food {
             img.set('top', that.pos[1])
             canvas.add(img);
             
-            img.on('moving', () => {
+            img.on('modified', () => {
                 that.updatePos([img.left,img.top])
                 
                 console.log(that.pos)
@@ -23,7 +23,6 @@ export default class Food {
                 img.scale(.21)
                 canvas.remove(img);
                 canvas.add(img);
-                console.log('on img')
             })
             
             img.on('mouseout', () => {

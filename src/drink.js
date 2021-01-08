@@ -14,7 +14,7 @@ export default class Drink {
             
             canvas.add(img);
             
-            img.on('moving', () => {
+            img.on('modified', () => {
                 that.updatePos([img.left,img.top])
                 
                 console.log(that.pos)
@@ -24,7 +24,6 @@ export default class Drink {
                 img.scale(.21)
                 canvas.remove(img);
                 canvas.add(img);
-                console.log('on img')
             })
             
             img.on('mouseout', () => {
