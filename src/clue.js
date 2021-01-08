@@ -3,13 +3,21 @@ export default class Clue {
         this.text = text;
         this.pos = pos;
         this.color;
+        this.clue
     }
 
     draw(canvas) {
-        const clue = new fabric.Text(this.text,{ fontSize: 15.75, fontFamily:'Lucida Sans',left: this.pos[0], top: this.pos[1], stroke: this.color})
-        canvas.add(clue);
-        clue.set('selectable', false);
-        clue.set('hoverCursor', "default");
+        this.clue = new fabric.Text(this.text,{ fontSize: 15.75, fontFamily:'Lucida Sans',left: this.pos[0], top: this.pos[1], stroke: this.color})
+        canvas.add(this.clue);
+        this.clue.set('selectable', false);
+        this.clue.set('hoverCursor', "default");
+    }
+
+    changeColor(color) {
+        this.clue.set('fill',color);
+        // if (color === 'green' || color === 'red') {
+        //     this.clue.set('fontWeight' , 'bold');
+        // } else this.clue.set('fontWeight', 'default')
     }
 }
 // Person #3 lives in the Color#3 house.

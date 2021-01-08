@@ -20,6 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const game = new Game(canvas)
   game.start(canvas);  
 
-    
+  
   
 });
