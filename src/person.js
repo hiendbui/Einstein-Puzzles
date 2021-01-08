@@ -7,7 +7,7 @@ export default class Person {
 
     draw(canvas) {
         let that = this;
-        const name = new fabric.Text(this.name[0].toUpperCase() + this.name.slice(1), { top: -12.5, fontSize: 10, fontFamily:'fantasy' });
+        const name = new fabric.Text(this.name[0].toUpperCase() + this.name.slice(1), { top: -12.5, fontSize: 12, fontFamily:'fantasy' });
         
         fabric.Image.fromURL(`../assets/images/people/${this.name}.svg`, function(img) {
             img.scale(0.08)
@@ -25,6 +25,22 @@ export default class Person {
                 that.updatePos([obj.left,obj.top])
                 console.log(that.pos)
             })
+            
+            
+            
+            obj.on('mouseover', () => {
+                obj.scale(1.02)
+                canvas.remove(obj);
+                canvas.add(obj);
+                console.log('on obj')
+            })
+            
+            obj.on('mouseout', () => {
+                obj.scale(1/1.02);
+                canvas.remove(obj);
+                canvas.add(obj);
+            })
+            
         });
     }
 

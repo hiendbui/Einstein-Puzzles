@@ -11,13 +11,26 @@ export default class Drink {
             img.set('hasControls', false)
             img.set('left', that.pos[0])
             img.set('top', that.pos[1])
-            img.set('index', 9999)
+            
             canvas.add(img);
             
             img.on('moving', () => {
                 that.updatePos([img.left,img.top])
                 
                 console.log(that.pos)
+            })
+
+            img.on('mouseover', () => {
+                img.scale(.21)
+                canvas.remove(img);
+                canvas.add(img);
+                console.log('on img')
+            })
+            
+            img.on('mouseout', () => {
+                img.scale(.2);
+                canvas.remove(img);
+                canvas.add(img);
             })
         });
     }

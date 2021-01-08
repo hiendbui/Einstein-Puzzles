@@ -16,6 +16,19 @@ export default class Pet {
                 that.updatePos([img.left,img.top])
                 console.log(that.pos)
             })
+
+            img.on('mouseover', () => {
+                img.scale(.21)
+                canvas.remove(img);
+                canvas.add(img);
+                console.log('on img')
+            })
+            
+            img.on('mouseout', () => {
+                img.scale(.2);
+                canvas.remove(img);
+                canvas.add(img);
+            })
         });
     }
 
