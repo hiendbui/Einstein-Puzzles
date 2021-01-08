@@ -5,12 +5,11 @@ export default class House {
         this.pos = pos;
         this.color = color;
         this.colors = colors;
-        this.num = num
+        this.num = num;
+        this.takenColors = [];
     }
 
     draw(canvas) {
-        const number = new fabric.Text(`House #${this.num}`, { left: 29, top: -20, fontSize: 15, fontFamily:"sans-serif" });
-        
         const base = new fabric.Rect({
             left: 10,
             top:50,
@@ -74,17 +73,10 @@ export default class House {
             this.draw(canvas) 
             
         })
-        // ctx.lineWidth = 5
-        
-        // ctx.strokeRect(this.pos[0], this.pos[1], 100, 75)
-
-    
-        // ctx.fillStyle= "#8b4513"
-        // ctx.fillRect(this.pos[0]+37.5, this.pos[1]+ 50, 25, 50);
     }
 
     changeColor() {
-        this.color = this.colors[this.colors.indexOf(this.color) + 1] //change color to next color in arr
-        
+        this.color = this.colors[(this.colors.indexOf(this.color) + 1) % this.colors.length] //change color to next color in arr
+        if (this.takenColors.includes(this.color)) this.changeColor();
     }
 }

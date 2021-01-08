@@ -29,7 +29,7 @@ export default class Game {
         let drinks = ['beer', 'boba', 'coffee', 'wine','tea']
         
         //randomize order of items
-        this.shuffle(colors);
+        this.colors = this.shuffle(colors);
         this.shuffle(people);
         this.shuffle(pets);
         this.shuffle(foods);
@@ -88,24 +88,49 @@ export default class Game {
         })
         canvas.on("mouse:down", () => {
             this.step(canvas)
+            setInterval(this.updateColors.bind(this),100)
+            
         })
     }
 
     step() {
-        //pet1 refers to which container pets[1] is in
-        const pet1 = this.whichContainer(this.pets[1]);
-        const food0 = this.whichContainer(this.foods[0]);
-        if (pet1 === food0 + 1 || pet1 === food0 - 1) {
-            this.clues[0].changeColor('green');
-        } else if ((pet1 > -1 && food0  > -1) || this.neighborsHaveItem(pet1,this.foods) || this.neighborsHaveItem(food0, this.pets)) {
-            this.clues[0].changeColor('red');
-        } else this.clues[0].changeColor('black');
-        //update for clues[4]
+        // clues[0] - clues[2] checks
+        
+        this.neighboringItemsCheck(this.pets[1], this.foods[0],this.pets,this.foods,0)
+        this.neighboringItemsCheck(this.foods[1], this.pets[0],this.foods,this.pets,1)
+        this.neighboringItemsCheck(this.foods[1], this.drinks[0],this.foods,this.drinks,2)
+
+        //clues[3] check
+        const color1 = this.colorContainer(this.colors[3])
+        const color2 = this.colorContainer(this.colors[4])
+        if (color1 === color2-1) {
+            this.clues[3].changeColor('green');
+        } else if (color1 === 4 || (color1 > -1 && (color2 > -1 || this.houses[color1 + 1].color !== 'transparent'))) {
+            this.clues[3].changeColor('red');
+        } else this.clues[3].changeColor('black');
+
+        if (color2 === color1+1) {
+            this.clues[3].changeColor('green');
+        } else if (color2 === 0 || (color2 > -1 && (color1 > -1 || this.houses[color2 - 1].color !== 'transparent'))) {
+            this.clues[3].changeColor('red');
+        } 
+        
+        //clues[4] check
         if (this.whichContainer(this.drinks[2]) === 2) {
             this.clues[4].changeColor('green')
         } else if (this.inOtherContainer(this.containers[2], this.drinks[2])) {
             this.clues[4].changeColor('red');
         } else this.clues[4].changeColor('black');
+
+        //clues[5], clues[6] checks
+        this.checkItemColorPair(this.drinks[3],this.drinks,this.colors[3],5);
+        this.checkItemColorPair(this.foods[0],this.foods,this.colors[0],6);
+
+        //clues[7], clues[8] check
+        this.checkItemPair(this.foods[2], this.pets[2], this.foods, this.pets, 7);
+        this.checkItemPair(this.foods[4], this.drinks[4], this.foods, this.drinks, 8);
+
+        //clues[9] check
         
     }
     
@@ -114,8 +139,8 @@ export default class Game {
         const clues = [
             `The person who keeps a ${pets[1]} as a pet lives next to the person who eats ${foods[0]}.`,
             `The person who eats ${foods[1]} lives next to the one who keeps a ${pets[0]} as a pet.`,
-            `The ${colors[3]} house is exactly to the left of the ${colors[4]} house.`,
             `The person who eats ${foods[1]} has a neighbor who drinks ${drinks[0]}.`,
+            `The ${colors[3]} house is exactly to the left of the ${colors[4]} house.`,
             `The person living in the center house drinks ${drinks[2]}.`,
             `The owner of the ${colors[3]} house drinks ${drinks[3]}.`,
             `The owner of the ${colors[0]} house eats ${foods[0]}.`,
@@ -147,12 +172,23 @@ export default class Game {
         })
     }
 
+    updateColors() {
+        const takenColors = [];
+        this.houses.forEach((house) => {
+            if (house.color !== 'transparent') takenColors.push(house.color)
+        });
+        
+        this.houses.forEach(house => {
+            house.takenColors = takenColors;
+        })
+    }
+
     createHouses(canvas) {
         const colors = ['transparent', 'blue', 'green', 'red', 'white', 'yellow' ]
         let a = 100
         let b = 60
         for (let i = 1; i < 6; i++) {
-            const house = new House([a, 40],"transparent", colors, '1')
+            const house = new House([a, 40],"transparent", colors, i)
             house.draw(canvas)
             this.houses.push(house)
             a += 200
@@ -182,10 +218,50 @@ export default class Game {
         return insideOther;
     }
 
+    checkItemPair(item1, item2, item1Type, item2Type, clueNum) {
+        const container1 = this.whichContainer(item1);
+        const container2 = this.whichContainer(item2);
+        if (container1 === container2 && container1 > -1) {
+            this.clues[clueNum].changeColor('green');
+        } else if ((container1 > -1 && container2  > -1) || (container1 > -1 && this.containers[container1].hasAnyOf(item2Type)) || (container2 > -1 && this.containers[container2].hasAnyOf(item1Type))) {
+            this.clues[clueNum].changeColor('red');
+        } else this.clues[clueNum].changeColor('black');
+    }
+    
+    neighboringItemsCheck(item1, item2, item1Type, item2Type, clueNum) {
+        const container1 = this.whichContainer(item1);
+        const container2 = this.whichContainer(item2);
+        if (container1 === container2 + 1 || container1 === container2 - 1) {
+            this.clues[clueNum].changeColor('green');
+        } else if ((container1 > -1 && container2  > -1) || (container1 > -1 && this.neighborsHaveItem(container1,item2Type)) || (container2 > -1 && this.neighborsHaveItem(container2, item1Type))) {
+            this.clues[clueNum].changeColor('red');
+        } else this.clues[clueNum].changeColor('black');
+    }
+
+
     neighborsHaveItem(num,itemType) {
-        if (num === 0) return this.containers[num+1]?.hasAnyOf(itemType)
-        else if (num === 4) return this.containers[num-1]?.hasAnyOf(itemType)
-        else return this.containers[num-1]?.hasAnyOf(itemType) && this.containers[num+1]?.hasAnyOf(itemType) 
+        if (num === 0) return this.containers[num+1].hasAnyOf(itemType)
+        else if (num === 4) return this.containers[num-1].hasAnyOf(itemType)
+        else return this.containers[num-1].hasAnyOf(itemType) && this.containers[num+1].hasAnyOf(itemType) 
+    }
+
+    colorContainer(color) {
+        let idx;
+        this.houses.forEach((house,i) => {
+            if (house.color === color) idx = i;
+        })
+        
+        return idx;
+    }
+
+    checkItemColorPair(item,itemType, color, clueNum) {
+        const colorContainer = this.colorContainer(color);
+        const itemContainer = this.whichContainer(item);
+        if (colorContainer === itemContainer && colorContainer > -1) {
+            this.clues[clueNum].changeColor('green')
+        } else if ((colorContainer > -1 && itemContainer > -1) || (colorContainer > -1 && this.containers[colorContainer].hasAnyOf(itemType)) || (itemContainer > -1 && this.houses[itemContainer].color !== 'transparent')) {
+            this.clues[clueNum].changeColor('red')
+        } else this.clues[clueNum].changeColor('black');
     }
 
     shuffle(arr) {
