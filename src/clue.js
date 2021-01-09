@@ -14,6 +14,7 @@ export default class Clue {
     }
 
     changeColor(color) {
+        this.color = color
         this.clue.set('fill',color);
         // if (color === 'green' || color === 'red') {
         //     this.clue.set('fontWeight' , 'bold');
