@@ -22,7 +22,7 @@ export default class Game {
     start(canvas){
         this.createHouses(canvas)
             
-        let colors = ['blue', 'green', 'red', 'white', 'yellow' ]    
+        let colors = ['blue', 'green', 'red', 'orange', 'yellow' ]    
         let people = ['joe', 'michelle', 'mike', 'vanessa', 'walker']
         let pets = ['bird', 'fish', 'cat',  'dog', 'horse']
         let foods = ['burgers', 'sushi', 'pizza',  'tacos', 'spaghetti']
@@ -38,7 +38,7 @@ export default class Game {
         //create items
         let x = 25;
         this.people = people.map(name => {
-          const person = new Person(name,[x, 275])
+          const person = new Person(name,[x, 255])
           person.draw(canvas);
           x += 60
           return person;
@@ -47,7 +47,7 @@ export default class Game {
         x= 325
         this.pets = pets.map(type => {
         
-          const pet = new Pet(type,[x, 250])
+          const pet = new Pet(type,[x, 230])
           pet.draw(canvas);
           x+= 65
           return pet;
@@ -55,7 +55,7 @@ export default class Game {
     
         x= 325
         this.foods = foods.map(type => {
-          const food = new Food(type, [x, 310])
+          const food = new Food(type, [x, 290])
           food.draw(canvas);
           x+= 65
           return food;
@@ -63,7 +63,7 @@ export default class Game {
     
         x= 325
         this.drinks = drinks.map(type => {
-          const drink = new Drink(type, [x, 370])
+          const drink = new Drink(type, [x, 350])
           drink.draw(canvas);
           x+= 65
           return drink;
@@ -76,8 +76,8 @@ export default class Game {
 
         this.addClues(colors, people, pets, foods, drinks);
         
-        const text = `Each house displayed has a unique color and a person \nliving in it. Each person has a specific pet they own, a \ndistinct type of food they like, an exclusive favorite drink. \nUse the clues below to place each item with the correct \nhouse and click on the house to change it to its \nappropriate color. Your task is to figure out the following \nquestion: Who owns the ${pets[3]}?`
-        const instructions = new fabric.Text(text,{ fontSize: 18, fontFamily:'Lucida Sans',top:255, left: 660 })
+        const text = `Each house displayed has a unique color and a person \nliving in it. Each person has exactly one pet they own, \nexactly one favorite type of food, and exactly one favorite \ntype of drink. Use the clues below to place each item \nwith the correct house and click on the house to change \nit to its appropriate color. Your task is to figure out the \nfollowing question: Who owns the ${pets[3]}?`
+        const instructions = new fabric.Text(text,{ fontSize: 17, fontFamily:'Helvetica Neue',top:235, left: 660 })
         canvas.add(instructions)
         instructions.set('selectable', false);
         instructions.set('hoverCursor', "default");
@@ -89,7 +89,6 @@ export default class Game {
         canvas.on("mouse:down", () => {
             this.step(canvas)
             setInterval(this.updateColors.bind(this),100)
-            
         })
     }
 
@@ -105,13 +104,13 @@ export default class Game {
         const color2 = this.colorContainer(this.colors[4])
         if (color1 === color2-1) {
             this.clues[3].changeColor('green');
-        } else if (color1 === 4 || (color1 > -1 && (color2 > -1 || this.houses[color1 + 1].color !== 'transparent'))) {
+        } else if (color1 === 4 || (color1 > -1 && (color2 > -1 || this.houses[color1 + 1].color !== 'white'))) {
             this.clues[3].changeColor('red');
         } else this.clues[3].changeColor('black');
 
         if (color2 === color1+1) {
             this.clues[3].changeColor('green');
-        } else if (color2 === 0 || (color2 > -1 && (color1 > -1 || this.houses[color2 - 1].color !== 'transparent'))) {
+        } else if (color2 === 0 || (color2 > -1 && (color1 > -1 || this.houses[color2 - 1].color !== 'white'))) {
             this.clues[3].changeColor('red');
         } 
         
@@ -210,7 +209,7 @@ export default class Game {
     updateColors() {
         const takenColors = [];
         this.houses.forEach((house) => {
-            if (house.color !== 'transparent') takenColors.push(house.color)
+            if (house.color !== 'white') takenColors.push(house.color)
         });
         
         this.houses.forEach(house => {
@@ -219,19 +218,31 @@ export default class Game {
     }
 
     createHouses(canvas) {
-        const colors = ['transparent', 'blue', 'green', 'red', 'white', 'yellow' ]
-        let a = 100
-        let b = 60
+        const colors = ['white', 'blue', 'green', 'red', 'orange', 'yellow' ]
+        let a = 0
+        let b = 0
         for (let i = 1; i < 6; i++) {
-            const house = new House([a, 40],"transparent", colors, i)
+            const house = new House([a, 0],"white", colors, i)
             house.draw(canvas)
             this.houses.push(house)
-            a += 200
+            a += 220
             
             const container =  new ObjectContainer([b,35])
             container.draw(canvas)
             this.containers.push(container)
-            b += 200
+            b += 220
+        }
+
+        let x = -20
+        for (let i = 0; i < 4; i++){
+            fabric.Image.fromURL(`../assets/images/houses/fence.png`, function(fence) {
+                fence.scale(0.028)
+                fence.set('left', x += 220);
+                fence.set('top', 123);
+                fence.set('selectable', false);
+                fence.set('hoverCursor', "pointer");
+                canvas.add(fence)
+            })
         }
     }
 
@@ -294,7 +305,7 @@ export default class Game {
         const itemContainer = this.whichContainer(itemType[idx]);
         if (colorContainer === itemContainer && colorContainer > -1) {
             this.clues[clueNum].changeColor('green')
-        } else if ((colorContainer > -1 && itemContainer > -1) || (colorContainer > -1 && this.containers[colorContainer].hasAnyOf(itemType)) || (itemContainer > -1 && this.houses[itemContainer].color !== 'transparent')) {
+        } else if ((colorContainer > -1 && itemContainer > -1) || (colorContainer > -1 && this.containers[colorContainer].hasAnyOf(itemType)) || (itemContainer > -1 && this.houses[itemContainer].color !== 'white')) {
             this.clues[clueNum].changeColor('red')
         } else this.clues[clueNum].changeColor('black');
     }
@@ -304,7 +315,7 @@ export default class Game {
         const personContainer = this.whichContainer(person);
         if (colorContainer === personContainer + 1 || colorContainer === personContainer - 1){ 
             this.clues[clueNum].changeColor('green')
-        } else if ((colorContainer > -1 && personContainer > -1) || (colorContainer > -1 && this.neighborsHaveItem(colorContainer, this.people)) || (personContainer > -1 && this.houses[personContainer-1]?.color !== 'transparent' && this.houses[personContainer+1]?.color !== 'transparent')) {
+        } else if ((colorContainer > -1 && personContainer > -1) || (colorContainer > -1 && this.neighborsHaveItem(colorContainer, this.people)) || (personContainer > -1 && this.houses[personContainer-1]?.color !== 'white' && this.houses[personContainer+1]?.color !== 'white')) {
             this.clues[clueNum].changeColor('red')
         } else this.clues[clueNum].changeColor('black');
     }

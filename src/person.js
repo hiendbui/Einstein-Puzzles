@@ -14,7 +14,7 @@ export default class Person {
             formatted = " " + formatted
         }
         if (this.name == "joe") formatted = " " + formatted 
-        const person = new fabric.Text(formatted, { top: -12.5, fontSize: 12, fontFamily:'fantasy' });
+        const person = new fabric.Text(formatted, { top: -12.5, fontSize: 12, fontFamily:'Helvetica Neue' });
         
         fabric.Image.fromURL(`../assets/images/people/${this.name}.svg`, function(img) {
             img.scale(0.08)

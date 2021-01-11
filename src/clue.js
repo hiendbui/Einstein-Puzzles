@@ -7,7 +7,7 @@ export default class Clue {
     }
 
     draw(canvas) {
-        this.clue = new fabric.Text(this.text,{ fontSize: 15.75, fontFamily:'Lucida Sans',left: this.pos[0], top: this.pos[1], stroke: this.color})
+        this.clue = new fabric.Text(this.text,{ fontSize: 13.5, fontFamily:'Helvetica Neue',left: this.pos[0], top: this.pos[1], stroke: this.color})
         canvas.add(this.clue);
         this.clue.set('selectable', false);
         this.clue.set('hoverCursor', "default");
@@ -16,9 +16,10 @@ export default class Clue {
     changeColor(color) {
         this.color = color
         this.clue.set('fill',color);
-        // if (color === 'green' || color === 'red') {
-        //     this.clue.set('fontWeight' , 'bold');
-        // } else this.clue.set('fontWeight', 'default')
+        if (color === 'green' ) {
+            this.clue.set('linethrough' , true);
+            // this.clue.set('fill','grey')
+        } else this.clue.set('linethrough' , false);
     }
 }
 // Person #3 lives in the Color#3 house.
