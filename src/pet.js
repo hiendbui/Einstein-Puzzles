@@ -6,7 +6,7 @@ export default class Pet {
 
     draw(canvas) {
         let that = this;
-        fabric.Image.fromURL(`../assets/images/pets/${this.type}.png`, function(img) {
+        fabric.Image.fromURL(`./assets/images/pets/${this.type}.png`, function(img) {
             img.scale(.2)
             img.set('left', that.pos[0])
             img.set('top', that.pos[1])

@@ -6,7 +6,7 @@ export default class Drink {
 
     draw(canvas) {
         let that = this;
-        fabric.Image.fromURL(`../assets/images/drinks/${this.type}.png`, function(img) {
+        fabric.Image.fromURL(`./assets/images/drinks/${this.type}.png`, function(img) {
             img.scale(.2)
             img.set('hasControls', false)
             img.set('left', that.pos[0])

@@ -147,8 +147,8 @@ export default class Game {
     
     solved() {
         let that = this;
-        fabric.Image.fromURL(`../assets/images/einstein.png`, function(img1) {
-            fabric.Image.fromURL(`../assets/images/text-box.png`, function(img2) {
+        fabric.Image.fromURL(`./assets/images/einstein.png`, function(img1) {
+            fabric.Image.fromURL(`./assets/images/text-box.png`, function(img2) {
             img1.scale(.2)
             img2.scale(.2)
             img2.set('left', 100)
@@ -235,7 +235,7 @@ export default class Game {
 
         let x = -20
         for (let i = 0; i < 4; i++){
-            fabric.Image.fromURL(`../assets/images/houses/fence.png`, function(fence) {
+            fabric.Image.fromURL(`./assets/images/houses/fence.png`, function(fence) {
                 fence.scale(0.028)
                 fence.set('left', x += 220);
                 fence.set('top', 123);

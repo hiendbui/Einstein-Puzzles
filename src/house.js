@@ -11,7 +11,7 @@ export default class House {
 
     draw(canvas, house2) {
         let that = this
-        fabric.Image.fromURL(`../assets/images/houses/${that.color}house.png`, function(house) {
+        fabric.Image.fromURL(`./assets/images/houses/${that.color}house.png`, function(house) {
             house.scale(0.049)
             house.set('left', that.pos[0]);
             house.set('top', that.pos[1]);
