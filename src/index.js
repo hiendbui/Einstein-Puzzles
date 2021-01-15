@@ -1,24 +1,33 @@
 import {fabric} from 'fabric';
-import ObjectContainer from './object_container';
-import House from './house';
-import Person from './person';
-import Pet from './pet';
-import Drink from './drink';
-import Food from './food';
+import Menu from './menu';
 import Game from './game';
 
 window.addEventListener('DOMContentLoaded', () => {
- 
+  const width = 1000;
+  const height = 500;
+       
+  window.resizeTo(width, height)
   
   
   const canvas = new fabric.Canvas("game-canvas", {
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#94d3f3',
   })
   
-  canvas.selection = false
+  canvas.selection = false;
   canvas.preserveObjectStacking = true;
-  const game = new Game(canvas)
-  game.start(canvas);  
+  
+  const menu = new Menu(canvas);
+  menu.draw(canvas);
+  const playbtn = document.getElementById("play-btn");
+ 
+  playbtn.onclick = function () {
+    const game = new Game(canvas)
+    canvas.clear();
+    playbtn.style = "display:none"
+    game.start(canvas);  
+    canvas.set('backgroundColor', '#e9f8ed')
+
+  }
 
   
   

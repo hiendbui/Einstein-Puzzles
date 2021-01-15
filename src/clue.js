@@ -2,12 +2,12 @@ export default class Clue {
     constructor(text,pos) {
         this.text = text;
         this.pos = pos;
-        this.color;
+        this.color = "black";
         this.clue
     }
 
     draw(canvas) {
-        this.clue = new fabric.Text(this.text,{ fontSize: 13.5, fontFamily:'Helvetica Neue',left: this.pos[0], top: this.pos[1], stroke: this.color})
+        this.clue = new fabric.Text(this.text,{ fontSize: 13.5, fontFamily:'Helvetica Neue',left: this.pos[0], top: this.pos[1]})
         canvas.add(this.clue);
         this.clue.set('selectable', false);
         this.clue.set('hoverCursor', "default");

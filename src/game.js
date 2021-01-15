@@ -17,6 +17,7 @@ export default class Game {
         this.drinks = [];
         this.pets = [];
         this.clues = [];
+        this.solved = false;
     }
 
     start(canvas){
@@ -76,8 +77,8 @@ export default class Game {
 
         this.addClues(colors, people, pets, foods, drinks);
         
-        const text = `Each house displayed has a unique color and a person \nliving in it. Each person has exactly one pet they own, \nexactly one favorite type of food, and exactly one favorite \ntype of drink. Use the clues below to place each item \nwith the correct house and click on the house to change \nit to its appropriate color. Your task is to figure out the \nfollowing question: Who owns the ${pets[3]}?`
-        const instructions = new fabric.Text(text,{ fontSize: 17, fontFamily:'Helvetica Neue',top:235, left: 660 })
+        const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown, exactly one favorite type of food, and exactly one \nfavorite type of drink. Use the clues below to place each \nitem with the correct house and click on the house to \nchange it to its appropriate color. Your task is to figure out \nthe following question: Who owns the ${pets[3]}?`
+        const instructions = new fabric.Text(text,{ fontSize: 16.25, fontFamily:'Helvetica Neue',top:250, left: 660, fill: "#041405" })
         canvas.add(instructions)
         instructions.set('selectable', false);
         instructions.set('hoverCursor', "default");
@@ -139,13 +140,13 @@ export default class Game {
         if (this.whichContainer(this.people[0]) === 0) this.clues[14].changeColor('green')
         else if (this.whichContainer(this.people[0]) === undefined && !this.containers[0].hasAnyOf(this.people)) this.clues[14].changeColor('black')
         else this.clues[14].changeColor('red')
-        console.log(this.clues.filter(clue => clue.color === 'green').length)
+        
         if (this.clues.filter(clue => clue.color === 'green').length === 15 && this.whichContainer(this.pets[3]) === 3) {
-            this.solved();
+            if (this.solved === false) this.gameOver();
         }
     }
     
-    solved() {
+    gameOver() {
         let that = this;
         fabric.Image.fromURL(`./assets/images/einstein.png`, function(img1) {
             fabric.Image.fromURL(`./assets/images/text-box.png`, function(img2) {
@@ -153,20 +154,20 @@ export default class Game {
             img2.scale(.2)
             img2.set('left', 100)
             img2.set('top', -35)
-            console.log(that.people[3])
+            
             const name = that.people[3].name[0].toUpperCase() + that.people[3].name.slice(1);
             const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who owned the \n${that.pets[3].type}.`, { left: 120, top: -10, fontSize: 12, fontFamily:'fantasy' });
             const obj = new fabric.Group([img1, img2, message], {
                 left: 50,
-                top: 250,
+                top: 225,
             })
             obj.set('selectable', false);
             obj.set('hoverCursor', "default");
             that.canvas.add(obj);
-            
-            
-            
-    })});
+            })
+        });
+
+        this.solved = true;
     }
     addClues(colors, names, pets, foods,drinks) {
         const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));

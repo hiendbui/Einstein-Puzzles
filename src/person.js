@@ -30,7 +30,7 @@ export default class Person {
             
             obj.on('modified', () => {
                 that.updatePos([obj.left,obj.top])
-                console.log(that.pos)
+                
             })
             
             

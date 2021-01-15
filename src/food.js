@@ -15,8 +15,6 @@ export default class Food {
             
             img.on('modified', () => {
                 that.updatePos([img.left,img.top])
-                
-                console.log(that.pos)
             })
 
             img.on('mouseover', () => {
