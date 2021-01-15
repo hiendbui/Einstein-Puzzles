@@ -154,7 +154,7 @@ export default class Game {
             img2.scale(.2)
             img2.set('left', 100)
             img2.set('top', -35)
-            console.log(that.people[3])
+            
             const name = that.people[3].name[0].toUpperCase() + that.people[3].name.slice(1);
             const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who owned the \n${that.pets[3].type}.`, { left: 120, top: -10, fontSize: 12, fontFamily:'fantasy' });
             const obj = new fabric.Group([img1, img2, message], {

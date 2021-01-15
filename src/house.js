@@ -27,7 +27,7 @@ export default class House {
             
             house.on('mousedown', () => {
                 that.changeColor();
-                console.log(that.color);
+                
                 that.draw(canvas,house)
             })
         })
