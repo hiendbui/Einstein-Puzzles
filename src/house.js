@@ -12,6 +12,10 @@ export default class House {
     draw(canvas, house2) {
         let that = this
         fabric.Image.fromURL(`../assets/images/houses/${that.color}house.png`, function(house) {
+            if (house2) {
+                
+                canvas.remove(house2)
+            }
             house.scale(0.049)
             house.set('left', that.pos[0]);
             house.set('top', that.pos[1]);
@@ -19,10 +23,6 @@ export default class House {
             house.set('hoverCursor', "pointer");
             canvas.add(house)
             house.sendToBack();
-            if (house2) {
-                house2.sendToBack()
-                canvas.remove(house2)
-            }
             
             
             house.on('mousedown', () => {
