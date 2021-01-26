@@ -6,7 +6,9 @@
     <title>Einstein Logic Puzzles</title>
     <link rel="icon" href="https://www.freefavicon.com/freefavicons/people/einstein-152-195870.png" type="image/png">
     <script type="application/javascript" src='./dist/main.js'></script>
-    <link rel="stylesheet" href="./dist/styling.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="./stylesheets/play_btn.css">
+    <link rel="stylesheet" href="./stylesheets/game_btns.css">
 </head>
 <body  style="background-image: url('./assets/images/chalkboard.jpg');" >
     <div className='canvas' width="100%"  align="center" text-align="center" >
@@ -24,6 +26,19 @@
             <i></i>
             <i></i>
             <span>Play</span>
+            
+        </div>
+        <div id='game-btns'>
+            <div>
+                <button id="instructions" class="instructions">Instructions</button>
+            </div>
+            <div>
+                <button id='shuffle'class="shuffle">Reshuffle Puzzle</button>
+            </div>
+            <div>
+                <button id="return" class="return">Return to Menu</button>
+            </div>
+            
             
         </div>
     </div>
