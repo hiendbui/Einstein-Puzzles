@@ -223,8 +223,8 @@ export default class Game {
         let a = 0
         let b = 0
         for (let i = 1; i < 6; i++) {
-            const house = new House([a, 0],"white", colors, i)
-            house.draw(canvas)
+            const house = new House([a, 0],"white", colors, i, canvas)
+            house.draw()
             this.houses.push(house)
             a += 220
         }
@@ -300,10 +300,11 @@ export default class Game {
         const colorHouse = this.colorHouse(this.colors[idx]);
         const itemHouse = this.whichHouse(itemType[idx]);
         if (colorHouse === itemHouse && colorHouse > -1) {
-            this.clues[clueNum].changeColor('green')
+            console.log('true!')
+            if (this.clues[clueNum].color !== 'green') this.clues[clueNum].changeColor('green')
         } else if ((colorHouse > -1 && itemHouse > -1) || (colorHouse > -1 && this.houses[colorHouse].hasAnyOf(itemType)) || (itemHouse > -1 && this.houses[itemHouse].color !== 'white')) {
-            this.clues[clueNum].changeColor('red')
-        } else this.clues[clueNum].changeColor('black');
+            if (this.clues[clueNum].color !== 'red') this.clues[clueNum].changeColor('red')
+        } else if (this.clues[clueNum].color !== 'black') this.clues[clueNum].changeColor('black');
     }
 
     checkPersonColorNeighbors(person, color, clueNum) {
