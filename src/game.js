@@ -78,18 +78,23 @@ export default class Game {
         this.addClues(colors, people, pets, foods, drinks);
         
         const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown, exactly one favorite type of food, and exactly one \nfavorite type of drink. Use the clues below to place each \nitem with the correct house and click on the house to \nchange it to its appropriate color. Your task is to figure out \nthe following question: Who owns the ${pets[3]}?`
-        const instructions = new fabric.Text(text,{ fontSize: 16, fontFamily:'Helvetica Neue',top:250, left: 660, fill: "#041405" })
-        const background = new fabric.Rect({top:225, left: 650, width: 440, height: 200, fill: 'white' })
+        const instructions = new fabric.Text(text,{ fontSize: 16, fontFamily:'Helvetica Neue',top:260, left: 660, fill: "#041405" })
+        const close = new fabric.Text('X',{ fontSize: 20, fontFamily:'Helvetica Neue',top:230, left: 1060  })
+        const background = new fabric.Rect({top:225, left: 650, width: 440, height: 200, fill: 'white', rx: 20, ry:20 })
         const box = new fabric.Group([background,instructions])
         const btn = document.getElementById('instructions');
         btn.onclick = function () {
             canvas.add(box)
+            canvas.add(close)
             document.getElementById("game-btns").style = "display:none"
         }
         box.set('selectable', false);
         box.set('hoverCursor', "default");
-        box.on("mousedown" , () =>{
+        close.set('selectable', false);
+        close.set('hoverCursor', "pointer");
+        close.on("mousedown" , () =>{
             canvas.remove(box)
+            canvas.remove(close)
             document.getElementById("game-btns").style = "display:block"
         })
 
