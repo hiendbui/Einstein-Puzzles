@@ -7,6 +7,7 @@ export default class House {
         this.colors = colors;
         this.num = num;
         this.takenColors = [];
+        this.coords = [pos[0]-10, pos[0]+170, 0, 190]
     }
 
     draw(canvas, house2) {
@@ -35,7 +36,21 @@ export default class House {
 
     changeColor() {
         this.color = this.colors[(this.colors.indexOf(this.color) + 1) % this.colors.length] //change color to next color in arr
-        if (this.takenColors.includes(this.color)) this.changeColor();
-        
+        if (this.takenColors.includes(this.color)) this.changeColor(); 
+    }
+
+    hasItem(item) {
+        return item.pos[0] >= this.coords[0] && 
+        item.pos[0] <= this.coords[1] && 
+        item.pos[1] >= this.coords[2] && 
+        item.pos[1] <= this.coords[3]
+    }
+
+    hasAnyOf(itemType) {
+        let hasOne = false;
+        itemType.forEach(item => {
+            if (this.hasItem(item)) hasOne = true;
+        })
+        return hasOne;
     }
 }
