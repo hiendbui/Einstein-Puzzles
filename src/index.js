@@ -12,7 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const canvas = new fabric.Canvas("game-canvas", {
     backgroundColor: '#94d3f3',
   })
-  
   canvas.selection = false;
   canvas.preserveObjectStacking = true;
   

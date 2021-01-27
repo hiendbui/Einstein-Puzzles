@@ -28,6 +28,7 @@ export default class Pet {
                 canvas.remove(img);
                 canvas.add(img);
             })
+            // img.bringToFront()
         });
     }
 

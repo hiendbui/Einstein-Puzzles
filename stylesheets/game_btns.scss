@@ -1,25 +1,29 @@
-
 #game-btns {
-    display: none;
-    transform: scale(0.5);
-    width: 1100px;
     
+    display: none;
+    top: 150px;
+    transform: scale(0.5);
+    width: 0px;
+    left: 43vw;
+    position: absolute;
     >*{
         margin-bottom: 20px;
         margin-top: 20px;
         position: relative;
         margin-left: max(600px);
         margin-right: min(400px);
-       
+        min-width: 360px;
     }
-    position: relative;
-   
-    margin-top: -400px;
     
     
     
     
     
+}
+@media only screen and (max-width: 1110px) {
+    #game-btns {
+        left: 475px;
+    }
 }
 .instructions {
     font-family: Hack, monospace;
@@ -61,7 +65,7 @@
         }
     }
 
-
+    padding: 1.5rem 63px;
 }
 
 
@@ -156,5 +160,5 @@ color: #ffffff;
         }
     }
 
-
+    padding: 1.5rem 43px;
 }

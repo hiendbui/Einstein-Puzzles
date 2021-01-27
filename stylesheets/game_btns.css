@@ -1,16 +1,21 @@
 #game-btns {
   display: none;
+  top: 150px;
   transform: scale(0.5);
-  width: 1100px;
-  position: relative;
-  margin-top: -400px; }
+  width: 0px;
+  left: 43vw;
+  position: absolute; }
   #game-btns > * {
     margin-bottom: 20px;
     margin-top: 20px;
     position: relative;
     margin-left: max(600px);
-    margin-right: min(400px); }
+    margin-right: min(400px);
+    min-width: 360px; }
 
+@media only screen and (max-width: 1110px) {
+  #game-btns {
+    left: 475px; } }
 .instructions {
   font-family: Hack, monospace;
   background: #0F0F6D;
@@ -22,7 +27,8 @@
   transition: all 0.5s;
   border-radius: 10px;
   width: auto;
-  position: relative; }
+  position: relative;
+  padding: 1.5rem 63px; }
   .instructions::after {
     content: "\f054";
     font-family: "Font Awesome 5 Free";
@@ -89,7 +95,8 @@
   border-radius: 10px;
   width: auto;
   position: relative;
-  min-width: 250px; }
+  min-width: 250px;
+  padding: 1.5rem 43px; }
   .return::after {
     content: "\f2f5";
     font-family: "Font Awesome 5 Free";
