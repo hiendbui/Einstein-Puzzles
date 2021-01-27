@@ -38,18 +38,18 @@
     width: auto;
     position: relative;
 
-    &::after {
-        content: "\f054";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 400;
-        position: absolute;
-        left: 85%;
-        top: 31%;
-        right: 5%;
-        bottom: 0;
-        opacity: 0;
+    // &::after {
+    //     content: "\f054";
+    //     font-family: "Font Awesome 5 Free";
+    //     font-weight: 400;
+    //     position: absolute;
+    //     left: 85%;
+    //     top: 31%;
+    //     right: 5%;
+    //     bottom: 0;
+    //     opacity: 0;
 
-    }
+    // }
 
     &:hover {
         background: #2b2bff;
@@ -83,19 +83,19 @@
     position: relative;
     min-width: 250px;
 
-    &::after {
-        content: "\f074";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 400;
-        position: absolute;
-        left: 80%;
-        top: 54%;
-        right: 0;
-        bottom: 0;
-        opacity: 0;
-        transform: translate(-50%, -50%);
+    // &::after {
+    //     content: "\f074";
+    //     font-family: "Font Awesome 5 Free";
+    //     font-weight: 400;
+    //     position: absolute;
+    //     left: 80%;
+    //     top: 54%;
+    //     right: 0;
+    //     bottom: 0;
+    //     opacity: 0;
+    //     transform: translate(-50%, -50%);
 
-    }
+    // }
 
     &:hover {
         background: #2b2bff;
@@ -131,19 +131,19 @@
     position: relative;
     min-width: 250px;
 
-    &::after {
-        content: "\f2f5";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 400;
-        position: absolute;
-        left: 80%;
-        top: 54%;
-        right: 0;
-        bottom: 0;
-        opacity: 0;
-        transform: translate(-50%, -50%);
+    // &::after {
+    //     content: "\f2f5";
+    //     font-family: "Font Awesome 5 Free";
+    //     font-weight: 400;
+    //     position: absolute;
+    //     left: 80%;
+    //     top: 54%;
+    //     right: 0;
+    //     bottom: 0;
+    //     opacity: 0;
+    //     transform: translate(-50%, -50%);
 
-    }
+    // }
 
     &:hover {
         background: #2b2bff;
