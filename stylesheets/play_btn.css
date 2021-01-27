@@ -134,7 +134,7 @@ span {
 }
 
 img {
-    opacity: .5;
+    opacity: 1;
 }
 
 .mask {
@@ -149,6 +149,30 @@ img {
 .canvas {
     z-index: 999;
 }
+
+
+
+.links {
+	position:absolute;
+	top:555px;
+	width:100%;
+}
+
+#linkedin  {
+	background-color:white;
+	border-radius: 10px;
+}
+
+#github {
+	background-color:white;
+	border-radius: 50px;
+}
+
+#angellist{
+	background-color:rgb(14, 14, 14);
+	border-radius: 10px;
+}
+
 
 
 
