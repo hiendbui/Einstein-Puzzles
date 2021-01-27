@@ -29,24 +29,11 @@
   width: auto;
   position: relative;
   padding: 1.5rem 63px; }
-  .instructions::after {
-    content: "\f054";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-    position: absolute;
-    left: 85%;
-    top: 31%;
-    right: 5%;
-    bottom: 0;
-    opacity: 0; }
   .instructions:hover {
     background: #2b2bff;
     transition: all 0.5s;
     border-radius: 10px;
     box-shadow: 0px 6px 15px #0000ff61; }
-    .instructions:hover::after {
-      opacity: 1;
-      transition: all 0.5s; }
 
 .shuffle {
   font-family: Hack, monospace;
@@ -61,27 +48,12 @@
   width: auto;
   position: relative;
   min-width: 250px; }
-  .shuffle::after {
-    content: "\f074";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-    position: absolute;
-    left: 80%;
-    top: 54%;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    transform: translate(-50%, -50%); }
   .shuffle:hover {
     background: #2b2bff;
     transition: all 0.5s;
     border-radius: 10px;
     box-shadow: 0px 6px 15px #0000ff61;
     color: #ffffff; }
-    .shuffle:hover::after {
-      opacity: 1;
-      transition: all 0.5s;
-      color: #ffffff; }
 
 .return {
   font-family: Hack, monospace;
@@ -97,26 +69,11 @@
   position: relative;
   min-width: 250px;
   padding: 1.5rem 43px; }
-  .return::after {
-    content: "\f2f5";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-    position: absolute;
-    left: 80%;
-    top: 54%;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    transform: translate(-50%, -50%); }
   .return:hover {
     background: #2b2bff;
     transition: all 0.5s;
     border-radius: 10px;
     box-shadow: 0px 6px 15px #0000ff61;
     color: #ffffff; }
-    .return:hover::after {
-      opacity: 1;
-      transition: all 0.5s;
-      color: #ffffff; }
 
 /*# sourceMappingURL=game_btns.css.map */
