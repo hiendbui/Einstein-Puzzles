@@ -1,5 +1,5 @@
 <h1>Einstein Puzzles</h1> 
-<img src="assets/images/einstein-menu.png?raw=true" width="250">
+<img src="assets/images/einstein-menu.png?raw=true" width="150">
 
 
 
