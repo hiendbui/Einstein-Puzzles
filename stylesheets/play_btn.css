@@ -28,13 +28,37 @@ body {
 	--w: 300px;
 	--h: 45px;
     position: relative;
-    display: flex;
+	display: flex;
 	width: var(--w);
 	height: var(--h);
 	border: 1px solid hsl(var(--primary));
 }
 
+#easy {
+	position: relative;
+	margin-right: 700px;
+	margin-top: 50px
+}
 
+#easy > i {
+	background:rgb(2, 255, 2);
+}
+
+#medium {
+	position: relative;
+	margin-top:102.5px;
+}
+#medium > i {
+	background:yellow;
+}
+#hard {
+	position: relative;
+	margin-top:102.5px;
+	margin-right: -700px;
+}
+#hard > i {
+	background:red;
+}
 
 
 i {
@@ -42,7 +66,6 @@ i {
 	width: 100%;
 	height: 100%;
 	transition: all .5s var(--c);
-	background: hsl(var(--primary));
 }
 
 i:nth-child(1) {transition-delay: .02s;}
@@ -117,7 +140,7 @@ span {
 }
 
 .btn:hover span {
-	color: hsl(var(--secondary));
+	color: rgb(0, 0, 0);
     transition-delay: .4s;
     cursor: pointer;
 }
@@ -127,11 +150,22 @@ span {
     
 }
 
-.btn {
-    position: relative;
-    margin-left: max(400px);
-    margin-right: min(400px);
+@media only screen and (max-width: 1125px) {
+   	#easy {
+		left:25px;
+	}
+	#medium {
+		position: absolute;
+		left:375px;
+	}
+	#hard {
+		position: absolute;
+		left:725px;
+	}
 }
+
+
+
 
 img {
     opacity: 1;
