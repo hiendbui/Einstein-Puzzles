@@ -1,6 +1,7 @@
 import {fabric} from 'fabric';
 import Menu from './menu';
 import Game from './game';
+import Hard from './hard';
 
 window.addEventListener('DOMContentLoaded', () => {
   const width = 1000;
@@ -19,8 +20,10 @@ window.addEventListener('DOMContentLoaded', () => {
   menu.draw(canvas);
   const playbtn = document.getElementById("play-btn");
   const gamebtns = document.getElementById("game-btns");
+  let level;
   playbtn.onclick = function () {
-    const game = new Game(canvas)
+    level = 'hard'
+    const game = new Hard(canvas)
     canvas.clear();
     playbtn.style = "display:none"
     game.start(canvas);  
@@ -39,7 +42,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const reshuffle = document.getElementById('shuffle');
   reshuffle.onclick = function () {
-    const game = new Game(canvas)
+    let game; 
+    if (level === 'hard') game = new Hard(canvas);
     playbtn.style = "display:none"
     canvas.clear();
     canvas.set('backgroundColor','#e9f8ed')
