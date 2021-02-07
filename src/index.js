@@ -1,6 +1,7 @@
 import {fabric} from 'fabric';
 import Menu from './menu';
-import Game from './game';
+import Easy from './easy';
+import Medium from './medium';
 import Hard from './hard';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -18,23 +19,33 @@ window.addEventListener('DOMContentLoaded', () => {
   
   const menu = new Menu(canvas);
   menu.draw(canvas);
-  const playbtn = document.getElementById("play-btn");
+  const playEasy = document.getElementById("easy")
+  const playMedium = document.getElementById("medium");
+  const playHard = document.getElementById("hard");
+  const playbtns = document.getElementById("play-btns");
   const gamebtns = document.getElementById("game-btns");
-  let level;
-  playbtn.onclick = function () {
-    level = 'hard'
-    const game = new Hard(canvas)
-    canvas.clear();
-    playbtn.style = "display:none"
-    game.start(canvas);  
-    canvas.set('backgroundColor', '#e9f8ed')
-    gamebtns.style = "display:block"
+  let game;
+
+  playEasy.onclick = function () {
+    game = new Easy(canvas)
+    setUpGame();
   }
+
+  playMedium.onclick = function () {
+    game = new Medium(canvas)
+    setUpGame();
+  }
+
+  playHard.onclick = function () {
+    game = new Hard(canvas)
+    setUpGame();
+  }
+
   const returnbtn = document.getElementById('return');
   returnbtn.onclick = function () {
     canvas.clear();
     gamebtns.style = "display:none"
-    playbtn.style = "display:"
+    playbtns.style = "display:"
     canvas.set('backgroundColor','#94d3f3')
     const menu = new Menu(canvas);
     menu.draw(canvas);
@@ -42,13 +53,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const reshuffle = document.getElementById('shuffle');
   reshuffle.onclick = function () {
-    let game; 
-    if (level === 'hard') game = new Hard(canvas);
-    playbtn.style = "display:none"
-    canvas.clear();
-    canvas.set('backgroundColor','#e9f8ed')
-    game.start(canvas);  
-    gamebtns.style = "display:block"
+    setUpGame();
   }
   
+  const setUpGame = () => {
+    canvas.clear();
+    playbtns.style = "display:none"
+    game.start(canvas);  
+    canvas.set('backgroundColor', '#e9f8ed')
+    gamebtns.style = "display:block"
+  }
 });
