@@ -14,7 +14,6 @@ export default class House {
     draw(house2) {
         let that = this
         fabric.Image.fromURL(`./assets/images/houses/${that.color}house.png`, function(house) {
-            console.log(that.color)
             if (house2) that.canvas.remove(house2);
             house.scale(0.049)
             house.set('left', that.pos[0]);
