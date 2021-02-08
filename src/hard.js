@@ -228,7 +228,7 @@ export default class Hard extends Game {
         const colors = ['white', 'blue', 'green', 'red', 'orange', 'yellow' ]
         let a = 0
         let b = 0
-        for (let i = 1; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
             const house = new House([a, 0],"white", colors, i, canvas)
             house.draw()
             this.houses.push(house)
