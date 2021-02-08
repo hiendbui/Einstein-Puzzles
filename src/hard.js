@@ -207,7 +207,7 @@ export default class Hard extends Game {
                 clue = new Clue(clueStr,[542.5,y])
               
             }
-            clue.draw(this.canvas);
+            clue.draw(this.canvas,13.5);
             y += 20;
             return clue
         })
