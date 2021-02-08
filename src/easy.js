@@ -89,9 +89,32 @@ export default class Easy extends Game {
     }
 
     step() {
-        // clues[0] - clues[2] checks
+        // clues[0]
+        if (this.colorHouse(this.colors[2]) === 2 && this.whichHouse(this.drinks[0]) === 0) {
+            this.clues[0].changeColor('green')
+        } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
+            this.clues[0].changeColor('red')
+        } else if (this.colorHouse(this.colors[2]) < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
+            this.clues[0].changeColor('red')
+        } else this.clues[0].changeColor('black')
         
-        // this.neighboringItemsCheck(this.pets[1], this.foods[0],this.pets,this.foods,0)
+        // clues[1]
+        this.neighboringItemsCheck(this.pets[0], this.pets[1],this.pets,this.pets,1)
+        if (this.whichHouse(this.pets[0]) >= this.whichHouse(this.pets[1]) ||
+            this.whichHouse(this.pets[1]) === 0 || this.whichHouse(this.pets[0]) === 2 ||
+            this.whichHouse(this.pets[0])+1 ===  this.whichHouse(this.pets[2]) || 
+            this.whichHouse(this.pets[1])-1 ===  this.whichHouse(this.pets[2])
+            ) {
+            this.clues[1].changeColor('red');
+        }
+
+        //clues[2]
+        this.checkPersonColorNeighbors(this.pets[2],this.colors[1], 2);
+        if (this.whichHouse(this.pets[2]) <= this.colorHouse(this.colors[1]) ||
+            this.whichHouse(this.pets[2]) === 0 || this.colorHouse(this.colors[1]) === 2 || 
+            this.houses[this.colorHouse(this.colors[1])+1]?.hasAnyOf(this.pets.slice(0,2))) {
+            this.clues[2].changeColor('red');
+        }
         // this.neighboringItemsCheck(this.foods[1], this.pets[0],this.foods,this.pets,1)
         // this.neighboringItemsCheck(this.foods[1], this.drinks[0],this.foods,this.drinks,2)
 
@@ -167,27 +190,24 @@ export default class Easy extends Game {
     addClues(colors, names, pets, drinks) {
         const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));
         const clues = [
-            `${namesCap[0]} does not live in the center house.`,
-            `The person with the ${pets[2]} drinks ${drinks[2]}.`,
-            `${namesCap[2]} lives in the last house.`,
             `There is one house between the house of the person who drinks ${drinks[0]} and the ${colors[2]} house on the right`,
             `The person with the ${pets[0]} lives directly to the left of the person with the ${pets[1]}.`,
             `The person with the ${pets[2]} lives directly to the right of the ${colors[1]} house`,
+            `${namesCap[0]} does not live in the center house.`,
+            `The person with the ${pets[2]} drinks ${drinks[2]}.`,
+            `${namesCap[2]} lives in the last house.`,
         ];
 
-        let y = 440
+        let y = 465
         this.clues = clues.map((clueStr, idx) => {
             let clue;
-            if (y === 540) y = 440;
-            if (idx < 5) {
+            if (y === 525) y = 465;
+            if (idx < 3) {
                 clue = new Clue(clueStr,[20, y])
-            } else if (idx > 9) {
-                clue = new Clue(clueStr,[877.5,y])
-            } else {
-                clue = new Clue(clueStr,[542.5,y])
-              
-            }
-            clue.draw(this.canvas);
+            } else  {
+                clue = new Clue(clueStr,[750,y])
+            };
+            clue.draw(this.canvas,15);
             y += 20;
             return clue
         })
@@ -216,8 +236,8 @@ export default class Easy extends Game {
         }
 
 
-        let x = 200
-        for (let i = 0; i < 2; i++){
+        let x = -20
+        for (let i = 0; i < 4; i++){
             fabric.Image.fromURL(`./assets/images/houses/fence.png`, function(fence) {
                 fence.scale(0.028)
                 fence.set('left', x += 220);
