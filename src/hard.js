@@ -12,6 +12,7 @@ export default class Hard extends Game {
     }
 
     start(canvas){
+        this.houses = [];
         this.createHouses(canvas)
             
         let colors = ['blue', 'green', 'red', 'orange', 'yellow' ]    

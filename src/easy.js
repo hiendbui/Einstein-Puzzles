@@ -24,6 +24,7 @@ export default class Easy extends Game {
         drinks = this.shuffle(drinks).slice(0,3);
 
         //create items
+        this.houses = [];
         this.createHouses(canvas);
 
         let x = 100;
@@ -90,28 +91,36 @@ export default class Easy extends Game {
 
     step() {
         // clues[0]
-        if (this.colorHouse(this.colors[2]) === 2 && this.whichHouse(this.drinks[0]) === 0) {
+        const house2color = this.colorHouse(this.colors[2])
+        if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
             this.clues[0].changeColor('green')
         } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
             this.clues[0].changeColor('red')
-        } else if (this.colorHouse(this.colors[2]) < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
+        } else if (house2color < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
             this.clues[0].changeColor('red')
         } else this.clues[0].changeColor('black')
         
         // clues[1]
+        const house0color = this.colorHouse(this.colors[0])
+        const petInHouse = num => this.whichHouse(this.pets[num]);
+        
         this.neighboringItemsCheck(this.pets[0], this.pets[1],this.pets,this.pets,1)
-        if (this.whichHouse(this.pets[0]) >= this.whichHouse(this.pets[1]) ||
-            this.whichHouse(this.pets[1]) === 0 || this.whichHouse(this.pets[0]) === 2 ||
-            this.whichHouse(this.pets[0])+1 ===  this.whichHouse(this.pets[2]) || 
-            this.whichHouse(this.pets[1])-1 ===  this.whichHouse(this.pets[2])
+        if (house0color > 0) {
+            this.clues[1].changeColor('red');
+        } else if (house0color !== 0) this.clues[1].changeColor('black');
+
+        if (petInHouse(0) >= petInHouse(1) ||
+            petInHouse(1) === 0 || petInHouse(0) === 2 ||
+            petInHouse(0)+1 ===  petInHouse(2) || 
+            petInHouse(1)-1 ===  petInHouse(2)
             ) {
             this.clues[1].changeColor('red');
         }
 
         //clues[2]
         this.checkPersonColorNeighbors(this.pets[2],this.colors[1], 2);
-        if (this.whichHouse(this.pets[2]) <= this.colorHouse(this.colors[1]) ||
-            this.whichHouse(this.pets[2]) === 0 || this.colorHouse(this.colors[1]) === 2 || 
+        if (petInHouse(2) <= this.colorHouse(this.colors[1]) ||
+            petInHouse(2) === 0 || this.colorHouse(this.colors[1]) === 2 || 
             this.houses[this.colorHouse(this.colors[1])+1]?.hasAnyOf(this.pets.slice(0,2))) {
             this.clues[2].changeColor('red');
         }
@@ -129,9 +138,15 @@ export default class Easy extends Game {
         //clues[5]
         if (this.whichHouse(this.people[2]) === 2) {
             this.clues[5].changeColor('green');
-        } else if (this.whichHouse(this.people[2]) < 2 || this.houses[2].hasAnyOf(this.people)) {
+        } else if (this.whichHouse(this.people[2]) < 2 || this.houses[2].hasAnyOf(this.people.slice(0,2))) {
             this.clues[5].changeColor('red');
         } else this.clues[5].changeColor('black');
+
+        if (this.clues.filter(clue => clue.color === 'green').length === 6 && 
+            this.whichHouse(this.drinks[1]) === 1 && 
+            this.whichHouse(this.people[1]) === 1) {
+            if (this.solved === false) this.gameOver();
+        }
     }
     
     gameOver() {
@@ -143,8 +158,8 @@ export default class Easy extends Game {
             img2.set('left', 100)
             img2.set('top', -35)
             
-            const name = that.people[3].name[0].toUpperCase() + that.people[3].name.slice(1);
-            const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who owned the \n${that.pets[3].type}.`, { left: 120, top: -10, fontSize: 12, fontFamily:'fantasy' });
+            const name = that.people[1].name[0].toUpperCase() + that.people[1].name.slice(1);
+            const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who drinks ${that.drinks[1].type}. \nReturn to the menu to \ntry Medium or Hard.`, { left: 120, top: -20, fontSize: 12, fontFamily:'fantasy' });
             const obj = new fabric.Group([img1, img2, message], {
                 left: 50,
                 top: 225,
@@ -161,7 +176,7 @@ export default class Easy extends Game {
         const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));
         const clues = [
             `There is one house between the house of the person who drinks ${drinks[0]} and the ${colors[2]} house on the right`,
-            `The person with the ${pets[0]} lives directly to the left of the person with the ${pets[1]}.`,
+            `The person with the ${pets[0]} lives in the ${colors[0]} house directly to the left of the person with the ${pets[1]}.`,
             `The person with the ${pets[2]} lives directly to the right of the ${colors[1]} house`,
             `${namesCap[0]} does not live in the center house.`,
             `The person with the ${pets[2]} drinks ${drinks[2]}.`,

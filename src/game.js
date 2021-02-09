@@ -55,7 +55,7 @@ export default class Game {
     neighborsHaveItem(num,itemType) {
         if (num === 0) return this.houses[num+1].hasAnyOf(itemType)
         else if (num === 4) return this.houses[num-1].hasAnyOf(itemType)
-        else return this.houses[num-1].hasAnyOf(itemType) && this.houses[num+1].hasAnyOf(itemType) 
+        else return this.houses[num-1]?.hasAnyOf(itemType) && this.houses[num+1]?.hasAnyOf(itemType) 
     }
 
     colorHouse(color) {
