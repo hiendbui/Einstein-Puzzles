@@ -91,14 +91,7 @@ export default class Easy extends Game {
 
     step() {
         // clues[0]
-        const house2color = this.colorHouse(this.colors[2])
-        if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
-            this.clues[0].changeColor('green')
-        } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
-            this.clues[0].changeColor('red')
-        } else if (house2color < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
-            this.clues[0].changeColor('red')
-        } else this.clues[0].changeColor('black')
+        this.oneHouseBtwItemColor(this.drinks[0], this.drinks, this.colors[2], 0)
         
         // clues[1]
         const house0color = this.colorHouse(this.colors[0])

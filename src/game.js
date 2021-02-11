@@ -87,6 +87,20 @@ export default class Game {
         } else this.clues[clueNum].changeColor('black');
     }
 
+    oneHouseBtwItemColor(item, itemType, color, clueNum) {
+        const houseNum = this.colorHouse(color);
+        const itemHouse = this.whichHouse(item);
+        if (houseNum - itemHouse === 2) {
+            this.clues[clueNum].changeColor('green');
+        } else if (houseNum && itemHouse+1 || (houseNum < 2 ||itemHouse > 1)) {
+            this.clues[clueNum].changeColor('red');
+        } else if (itemHouse+1 && ![color,'white'].includes(this.houses[itemHouse+2]?.color)) {
+            this.clues[clueNum].changeColor('red');
+        } else if (houseNum && this.houses[houseNum-2].hasAnyOf(itemType)) {
+            this.clues[clueNum].changeColor('red');
+        } else this.clues[clueNum].changeColor('black');
+    }
+
     shuffle(arr) {
         for(let i = arr.length - 1; i > 0; i--){
             const j = Math.floor(Math.random() * (i+1))
@@ -96,4 +110,5 @@ export default class Game {
         }
         return arr
     }
+
 }
