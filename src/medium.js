@@ -97,8 +97,34 @@ export default class Medium extends Game {
         }
         this.twoHousesBtw(this.foods,1);
         
+        //clues[2]-clues[3]
         this.oneHouseBtwItemColor(this.foods[1], this.foods, this.colors[3], 2);
         this.oneHouseBtwItemColor(this.pets[0],this.pets, this.colors[2],3);
+
+        //clues[4]
+        const leftFoodHouse = this.whichHouse(this.foods[2]);
+        const rightFoodHouse = this.whichHouse(this.foods[3]);
+        const allFoodOnEitherSide = (leftIdx,rightIdx) => {
+            let allTaken = true;
+
+            for (let i=leftIdx+1; i < this.houses.length; i++) {
+                if (!this.houses[i].hasAnyOf(this.foods)) allTaken = false;
+            }
+            if (allTaken && leftIdx+1) return true;
+
+            for (let i=rightIdx-1; i >= 0; i--) {
+                if (!this.houses[i].hasAnyOf(this.foods)) allTaken = false;
+            }
+            if (rightIdx+1) return allTaken;
+        }
+        if (leftFoodHouse < rightFoodHouse) {
+            this.clues[4].changeColor('green');
+        } else if (leftFoodHouse >= rightFoodHouse || allFoodOnEitherSide(leftFoodHouse,rightFoodHouse)) {
+            this.clues[4].changeColor('red');
+        } else this.clues[4].changeColor('black');
+
+        //clues[5]
+        this.oneHouseBtwItems(this.foods[1],this.foods,this.people[3],this.people,5);
         // const house2color = this.colorHouse(this.colors[2])
         // if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
         //     this.clues[0].changeColor('green')
