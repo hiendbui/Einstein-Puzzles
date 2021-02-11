@@ -175,9 +175,9 @@ export default class Easy extends Game {
     addClues(colors, names, pets, drinks) {
         const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));
         const clues = [
-            `There is one house between the house of the person who drinks ${drinks[0]} and the ${colors[2]} house on the right`,
+            `There is one house between the house of the person who drinks ${drinks[0]} and the ${colors[2]} house on the right.`,
             `The person with the ${pets[0]} lives in the ${colors[0]} house directly to the left of the person with the ${pets[1]}.`,
-            `The person with the ${pets[2]} lives directly to the right of the ${colors[1]} house`,
+            `The person with the ${pets[2]} lives directly to the right of the ${colors[1]} house.`,
             `${namesCap[0]} does not live in the center house.`,
             `The person with the ${pets[2]} drinks ${drinks[2]}.`,
             `${namesCap[2]} lives in the last house.`,

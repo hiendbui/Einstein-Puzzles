@@ -172,27 +172,30 @@ export default class Medium extends Game {
 
         this.solved = true;
     }
-    addClues(colors, names, pets, drinks) {
+    addClues(colors, names, pets, foods) {
         const namesCap = names.map((name) => name[0].toUpperCase() + name.slice(1));
         const clues = [
-            `There is one house between the house of the person who drinks ${drinks[0]} and the ${colors[2]} house on the right`,
-            `The person with the ${pets[0]} lives in the ${colors[0]} house directly to the left of the person with the ${pets[1]}.`,
-            `The person with the ${pets[2]} lives directly to the right of the ${colors[1]} house`,
-            `${namesCap[0]} does not live in the center house.`,
-            `The person with the ${pets[2]} drinks ${drinks[2]}.`,
-            `${namesCap[2]} lives in the last house.`,
+            `There are two houses between the person with the ${pets[0]} and the person with the ${pets[3]} on the right.`,
+            `There are two houses between the person who eats ${foods[3]} and the person who eats ${foods[0]}.`,
+            `There is one house between the person who eats ${foods[1]} and the ${colors[3]} house on the right.`,
+            `There is one house between the person with the ${pets[0]} and the ${colors[2]} house on the right.`,
+            `There person who eats ${foods[3]} lives somewhere to right of the person who eats ${foods[2]}.`,
+            `There is one house between ${namesCap[3]} and the one who eats ${foods[1]} on the left.`,
+            `The second house is ${colors[1]} and is next to the ${colors[0]} house.`,
+            `${namesCap[1]} lives directly to the left of the person with the ${pets[2]}.`,
+            `${namesCap[0]} lives in the first house.`
         ];
 
-        let y = 465
+        let y = 445
         this.clues = clues.map((clueStr, idx) => {
             let clue;
-            if (y === 525) y = 465;
-            if (idx < 3) {
-                clue = new Clue(clueStr,[20, y])
+            if (y === 545) y = 445;
+            if (idx < 5) {
+                clue = new Clue(clueStr,[10, y])
             } else  {
-                clue = new Clue(clueStr,[750,y])
+                clue = new Clue(clueStr,[610,y])
             };
-            clue.draw(this.canvas,15);
+            clue.draw(this.canvas,13.5);
             y += 20;
             return clue
         })
