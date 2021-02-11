@@ -90,7 +90,15 @@ export default class Medium extends Game {
     }
 
     step() {
-        // clues[0]
+        //clues[0]-clues[1]
+        this.twoHousesBtw(this.pets,0);
+        if(this.whichHouse(this.pets[0]) > 0 || this.whichHouse(this.pets[3]) < 3) {
+            this.clues[0].changeColor('red')
+        }
+        this.twoHousesBtw(this.foods,1);
+        
+        this.oneHouseBtwItemColor(this.foods[1], this.foods, this.colors[3], 2);
+        this.oneHouseBtwItemColor(this.pets[0],this.pets, this.colors[2],3);
         // const house2color = this.colorHouse(this.colors[2])
         // if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
         //     this.clues[0].changeColor('green')
@@ -179,7 +187,7 @@ export default class Medium extends Game {
             `There are two houses between the person who eats ${foods[3]} and the person who eats ${foods[0]}.`,
             `There is one house between the person who eats ${foods[1]} and the ${colors[3]} house on the right.`,
             `There is one house between the person with the ${pets[0]} and the ${colors[2]} house on the right.`,
-            `There person who eats ${foods[3]} lives somewhere to right of the person who eats ${foods[2]}.`,
+            `The person who eats ${foods[3]} lives somewhere to right of the person who eats ${foods[2]}.`,
             `There is one house between ${namesCap[3]} and the one who eats ${foods[1]} on the left.`,
             `The second house is ${colors[1]} and is next to the ${colors[0]} house.`,
             `${namesCap[1]} lives directly to the left of the person with the ${pets[2]}.`,
@@ -246,5 +254,18 @@ export default class Medium extends Game {
             canvas.add(house)
             house.sendToBack();
         }); 
+    }
+
+    twoHousesBtw(type, clueIdx) {
+        const notIn = [1,2]
+        const itemInHouse = idx => this.whichHouse(type[idx]);
+        if (Math.abs(itemInHouse(0)-itemInHouse(3)) === 3) {
+            this.clues[clueIdx].changeColor('green')
+        } else if  (notIn.includes(itemInHouse(0)) || 
+                    notIn.includes(itemInHouse(3)) ||
+                    this.houses[0].hasAnyOf(type) &&
+                    this.houses[3].hasAnyOf(type)) {
+            this.clues[clueIdx].changeColor('red');         
+        } else this.clues[clueIdx].changeColor('black');
     }
 }
