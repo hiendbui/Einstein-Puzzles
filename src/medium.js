@@ -2,10 +2,10 @@ import Game from './game';
 import House from './house';
 import Person from './person';
 import Pet from './pet';
-import Drink from './drink';
+import Food from './food';
 import Clue from './clue';
 
-export default class Easy extends Game {
+export default class Medium extends Game {
     constructor(canvas) {
         super(canvas);
     }
@@ -15,50 +15,50 @@ export default class Easy extends Game {
         let colors = ['blue', 'green', 'red', 'orange', 'yellow' ]    
         let people = ['joe', 'michelle', 'mike', 'vanessa', 'walker']
         let pets = ['bird', 'fish', 'cat',  'dog', 'horse']
-        let drinks = ['beer', 'boba', 'coffee', 'wine','tea']
+        let foods = ['burgers', 'sushi', 'pizza',  'tacos', 'spaghetti']
         
         //randomize order of items
-        this.colors = this.shuffle(colors).slice(0,3);
-        people = this.shuffle(people).slice(0,3);
-        pets = this.shuffle(pets).slice(0,3);
-        drinks = this.shuffle(drinks).slice(0,3);
+        this.colors = this.shuffle(colors).slice(0,4);
+        people = this.shuffle(people).slice(0,4);
+        pets = this.shuffle(pets).slice(0,4);
+        foods = this.shuffle(foods).slice(0,4);
 
         //create items
         this.houses = [];
         this.createHouses(canvas);
 
-        let x = 100;
+        let x = 50;
         this.people = people.map(name => {
           const person = new Person(name,[x, 255])
           person.draw(canvas);
-          x += 80
+          x += 70
           return person;
         });
     
-        x= 400
+        x= 375;
         this.pets = pets.map(type => {
         
           const pet = new Pet(type,[x, 260])
           pet.draw(canvas);
-          x+= 80
+          x+= 70
           return pet;
         });
     
-        x= 400
-        this.drinks = drinks.map(type => {
-          const drink = new Drink(type, [x, 320])
-          drink.draw(canvas);
-          x+= 80
-          return drink;
+        x= 375;
+        this.foods = foods.map(type => {
+          const food = new Food(type, [x, 320])
+          food.draw(canvas);
+          x+= 70
+          return food;
         });
 
         people = this.shuffle(this.people).map(person => person.name);
         pets = this.shuffle(this.pets).map(pet => pet.type);
-        drinks = this.shuffle(this.drinks).map(drink => drink.type);
+        foods = this.shuffle(this.foods).map(food => food.type);
 
-        this.addClues(colors, people, pets, drinks);
+        this.addClues(colors, people, pets, foods);
         
-        const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown and exactly one favorite type of drink. Use the clues \nbelow to place each item with the correct house and click \non the house to change it to its appropriate color. Your \ntask is to figure out the following question: Who drinks \n${drinks[1]}?`
+        const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown and exactly one favorite type of food. Use the clues \nbelow to place each item with the correct house and click \non the house to change it to its appropriate color. Your \ntask is to figure out the following question: Who eats \n${foods[1]}?`
         const instructions = new fabric.Text(text,{ fontSize: 16, fontFamily:'Helvetica Neue',top:260, left: 667.5, fill: "#041405" })
         const close = new fabric.Text('X',{ fontSize: 18, fontFamily:'Helvetica Neue',top:235, left: 1065  })
         const background = new fabric.Rect({top:225, left: 660, width: 430, height: 200, fill: 'white', rx: 20, ry:20 })
@@ -91,62 +91,62 @@ export default class Easy extends Game {
 
     step() {
         // clues[0]
-        const house2color = this.colorHouse(this.colors[2])
-        if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
-            this.clues[0].changeColor('green')
-        } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
-            this.clues[0].changeColor('red')
-        } else if (house2color < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
-            this.clues[0].changeColor('red')
-        } else this.clues[0].changeColor('black')
+        // const house2color = this.colorHouse(this.colors[2])
+        // if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
+        //     this.clues[0].changeColor('green')
+        // } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
+        //     this.clues[0].changeColor('red')
+        // } else if (house2color < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
+        //     this.clues[0].changeColor('red')
+        // } else this.clues[0].changeColor('black')
         
-        // clues[1]
-        const house0color = this.colorHouse(this.colors[0])
-        const petInHouse = num => this.whichHouse(this.pets[num]);
+        // // clues[1]
+        // const house0color = this.colorHouse(this.colors[0])
+        // const petInHouse = num => this.whichHouse(this.pets[num]);
         
-        this.neighboringItemsCheck(this.pets[0], this.pets[1],this.pets,this.pets,1)
-        if (house0color > 0) {
-            this.clues[1].changeColor('red');
-        } else if (house0color !== 0) this.clues[1].changeColor('black');
+        // this.neighboringItemsCheck(this.pets[0], this.pets[1],this.pets,this.pets,1)
+        // if (house0color > 0) {
+        //     this.clues[1].changeColor('red');
+        // } else if (house0color !== 0) this.clues[1].changeColor('black');
 
-        if (petInHouse(0) >= petInHouse(1) ||
-            petInHouse(1) === 0 || petInHouse(0) === 2 ||
-            petInHouse(0)+1 ===  petInHouse(2) || 
-            petInHouse(1)-1 ===  petInHouse(2)
-            ) {
-            this.clues[1].changeColor('red');
-        }
+        // if (petInHouse(0) >= petInHouse(1) ||
+        //     petInHouse(1) === 0 || petInHouse(0) === 2 ||
+        //     petInHouse(0)+1 ===  petInHouse(2) || 
+        //     petInHouse(1)-1 ===  petInHouse(2)
+        //     ) {
+        //     this.clues[1].changeColor('red');
+        // }
 
-        //clues[2]
-        this.checkPersonColorNeighbors(this.pets[2],this.colors[1], 2);
-        if (petInHouse(2) <= this.colorHouse(this.colors[1]) ||
-            petInHouse(2) === 0 || this.colorHouse(this.colors[1]) === 2 || 
-            this.houses[this.colorHouse(this.colors[1])+1]?.hasAnyOf(this.pets.slice(0,2))) {
-            this.clues[2].changeColor('red');
-        }
+        // //clues[2]
+        // this.checkPersonColorNeighbors(this.pets[2],this.colors[1], 2);
+        // if (petInHouse(2) <= this.colorHouse(this.colors[1]) ||
+        //     petInHouse(2) === 0 || this.colorHouse(this.colors[1]) === 2 || 
+        //     this.houses[this.colorHouse(this.colors[1])+1]?.hasAnyOf(this.pets.slice(0,2))) {
+        //     this.clues[2].changeColor('red');
+        // }
 
-        //clues[3]
-        if (this.whichHouse(this.people[0]) === 1) {
-            this.clues[3].changeColor('red');
-        } else if (this.whichHouse(this.people[0]) >= 0) {
-            this.clues[3].changeColor('green');
-        } else this.clues[3].changeColor('black');
+        // //clues[3]
+        // if (this.whichHouse(this.people[0]) === 1) {
+        //     this.clues[3].changeColor('red');
+        // } else if (this.whichHouse(this.people[0]) >= 0) {
+        //     this.clues[3].changeColor('green');
+        // } else this.clues[3].changeColor('black');
 
-        //clues[4]
-        this.checkItemPair(2,this.pets,this.drinks, 4);
+        // //clues[4]
+        // this.checkItemPair(2,this.pets,this.drinks, 4);
 
-        //clues[5]
-        if (this.whichHouse(this.people[2]) === 2) {
-            this.clues[5].changeColor('green');
-        } else if (this.whichHouse(this.people[2]) < 2 || this.houses[2].hasAnyOf(this.people.slice(0,2))) {
-            this.clues[5].changeColor('red');
-        } else this.clues[5].changeColor('black');
+        // //clues[5]
+        // if (this.whichHouse(this.people[2]) === 2) {
+        //     this.clues[5].changeColor('green');
+        // } else if (this.whichHouse(this.people[2]) < 2 || this.houses[2].hasAnyOf(this.people.slice(0,2))) {
+        //     this.clues[5].changeColor('red');
+        // } else this.clues[5].changeColor('black');
 
-        if (this.clues.filter(clue => clue.color === 'green').length === 6 && 
-            this.whichHouse(this.drinks[1]) === 1 && 
-            this.whichHouse(this.people[1]) === 1) {
-            if (this.solved === false) this.gameOver();
-        }
+        // if (this.clues.filter(clue => clue.color === 'green').length === 6 && 
+        //     this.whichHouse(this.drinks[1]) === 1 && 
+        //     this.whichHouse(this.people[1]) === 1) {
+        //     if (this.solved === false) this.gameOver();
+        // }
     }
     
     gameOver() {
@@ -210,10 +210,10 @@ export default class Easy extends Game {
     }
 
     createHouses(canvas) {
-        this.addEmptySpace(canvas,0);
-        this.addEmptySpace(canvas,880);
-        let a = 220
-        for (let i = 0; i < 3; i++) {
+        this.addEmptySpace(canvas,-110);
+        this.addEmptySpace(canvas,990);
+        let a = 110
+        for (let i = 0; i < 4; i++) {
             const house = new House([a, 0],"white", [...this.colors,'white'], i, canvas)
             house.draw()
             this.houses.push(house)
@@ -221,8 +221,8 @@ export default class Easy extends Game {
         }
 
 
-        let x = -20
-        for (let i = 0; i < 4; i++){
+        let x = -130
+        for (let i = 0; i < 5; i++){
             fabric.Image.fromURL(`./assets/images/houses/fence.png`, function(fence) {
                 fence.scale(0.028)
                 fence.set('left', x += 220);
