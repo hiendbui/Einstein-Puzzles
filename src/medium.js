@@ -11,7 +11,7 @@ export default class Medium extends Game {
     }
 
     start(canvas){
-            
+        this.solved = false;
         let colors = ['blue', 'green', 'red', 'orange', 'yellow' ]    
         let people = ['joe', 'michelle', 'mike', 'vanessa', 'walker']
         let pets = ['bird', 'fish', 'cat',  'dog', 'horse']
@@ -58,7 +58,7 @@ export default class Medium extends Game {
 
         this.addClues(colors, people, pets, foods);
         
-        const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown and exactly one favorite type of food. Use the clues \nbelow to place each item with the correct house and click \non the house to change it to its appropriate color. Your \ntask is to figure out the following question: Who eats \n${foods[1]}?`
+        const text = `Instructions: Each house displayed has a unique color and \na person living in it. Each person has exactly one pet they \nown and exactly one favorite type of food. Use the clues \nbelow to place each item with the correct house and click \non the house to change it to its appropriate color. Your \ntask is to correctly place each person and item with its \nappropriate house.`
         const instructions = new fabric.Text(text,{ fontSize: 16, fontFamily:'Helvetica Neue',top:260, left: 667.5, fill: "#041405" })
         const close = new fabric.Text('X',{ fontSize: 18, fontFamily:'Helvetica Neue',top:235, left: 1065  })
         const background = new fabric.Rect({top:225, left: 660, width: 430, height: 200, fill: 'white', rx: 20, ry:20 })
@@ -137,12 +137,21 @@ export default class Medium extends Game {
             this.clues[6].changeColor('red');
         } else this.clues[6].changeColor('black');
        
+        this.neighboringItemsCheck(this.people[1], this.pets[2], this.people, this.pets, 7);
+        if (this.whichHouse(this.people[1]) === 3 || this.whichHouse(this.pets[2]) === 0) {
+            this.clues[7].changeColor('red');
+        }
+        if (this.whichHouse(this.people[1]) > this.whichHouse(this.pets[2]) === 0) {
+            this.clues[7].changeColor('red');
+        }
 
-        // if (this.clues.filter(clue => clue.color === 'green').length === 6 && 
-        //     this.whichHouse(this.drinks[1]) === 1 && 
-        //     this.whichHouse(this.people[1]) === 1) {
-        //     if (this.solved === false) this.gameOver();
-        // }
+        if (this.whichHouse(this.people[0]) === 0) this.clues[8].changeColor('green')
+        else if (this.whichHouse(this.people[0]) === undefined && !this.houses[0].hasAnyOf(this.people)) this.clues[8].changeColor('black')
+        else this.clues[8].changeColor('red')
+
+        if (this.clues.filter(clue => clue.color === 'green').length === 9 && this.whichHouse(this.pets[1])===1 && this.whichHouse(this.people[2])===2) {
+            if (this.solved === false) this.gameOver();
+        }
     }
     
     gameOver() {
@@ -155,7 +164,7 @@ export default class Medium extends Game {
             img2.set('top', -35)
             
             const name = that.people[1].name[0].toUpperCase() + that.people[1].name.slice(1);
-            const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who drinks ${that.drinks[1].type}. \nReturn to the menu to \ntry Medium or Hard.`, { left: 120, top: -20, fontSize: 12, fontFamily:'fantasy' });
+            const message = new fabric.Text(`Congrats! You correctly \nplaced each person and \nitem with the house it\nbelongs to. Return to the \nmenu to try Hard!`, { left: 120, top: -20, fontSize: 12, fontFamily:'fantasy' });
             const obj = new fabric.Group([img1, img2, message], {
                 left: 50,
                 top: 225,
