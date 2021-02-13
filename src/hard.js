@@ -12,6 +12,7 @@ export default class Hard extends Game {
     }
 
     start(canvas){
+        this.solved = false;
         this.houses = [];
         this.createHouses(canvas)
             

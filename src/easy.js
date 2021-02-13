@@ -11,7 +11,7 @@ export default class Easy extends Game {
     }
 
     start(canvas){
-            
+        this.solved = false;
         let colors = ['blue', 'green', 'red', 'orange', 'yellow' ]    
         let people = ['joe', 'michelle', 'mike', 'vanessa', 'walker']
         let pets = ['bird', 'fish', 'cat',  'dog', 'horse']
@@ -152,7 +152,7 @@ export default class Easy extends Game {
             img2.set('top', -35)
             
             const name = that.people[1].name[0].toUpperCase() + that.people[1].name.slice(1);
-            const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who drinks ${that.drinks[1].type}. \nReturn to the menu to \ntry Medium or Hard.`, { left: 120, top: -20, fontSize: 12, fontFamily:'fantasy' });
+            const message = new fabric.Text(`Congrats! You deduced \ncorrectly that it was \n${name} who drinks \n${that.drinks[1].type}. Return to menu \nto try Medium or Hard!`, { left: 120, top: -20, fontSize: 12, fontFamily:'fantasy' });
             const obj = new fabric.Group([img1, img2, message], {
                 left: 50,
                 top: 225,
