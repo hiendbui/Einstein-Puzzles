@@ -125,56 +125,18 @@ export default class Medium extends Game {
 
         //clues[5]
         this.oneHouseBtwItems(this.foods[1],this.foods,this.people[3],this.people,5);
-        // const house2color = this.colorHouse(this.colors[2])
-        // if (house2color === 2 && this.whichHouse(this.drinks[0]) === 0) {
-        //     this.clues[0].changeColor('green')
-        // } else if (this.inOtherHouse(this.houses[0], this.drinks[0]) || this.houses[0].hasAnyOf(this.drinks)) {
-        //     this.clues[0].changeColor('red')
-        // } else if (house2color < 2 || ![this.colors[2],'white'].includes(this.houses[2].color) ) {
-        //     this.clues[0].changeColor('red')
-        // } else this.clues[0].changeColor('black')
-        
-        // // clues[1]
-        // const house0color = this.colorHouse(this.colors[0])
-        // const petInHouse = num => this.whichHouse(this.pets[num]);
-        
-        // this.neighboringItemsCheck(this.pets[0], this.pets[1],this.pets,this.pets,1)
-        // if (house0color > 0) {
-        //     this.clues[1].changeColor('red');
-        // } else if (house0color !== 0) this.clues[1].changeColor('black');
 
-        // if (petInHouse(0) >= petInHouse(1) ||
-        //     petInHouse(1) === 0 || petInHouse(0) === 2 ||
-        //     petInHouse(0)+1 ===  petInHouse(2) || 
-        //     petInHouse(1)-1 ===  petInHouse(2)
-        //     ) {
-        //     this.clues[1].changeColor('red');
-        // }
-
-        // //clues[2]
-        // this.checkPersonColorNeighbors(this.pets[2],this.colors[1], 2);
-        // if (petInHouse(2) <= this.colorHouse(this.colors[1]) ||
-        //     petInHouse(2) === 0 || this.colorHouse(this.colors[1]) === 2 || 
-        //     this.houses[this.colorHouse(this.colors[1])+1]?.hasAnyOf(this.pets.slice(0,2))) {
-        //     this.clues[2].changeColor('red');
-        // }
-
-        // //clues[3]
-        // if (this.whichHouse(this.people[0]) === 1) {
-        //     this.clues[3].changeColor('red');
-        // } else if (this.whichHouse(this.people[0]) >= 0) {
-        //     this.clues[3].changeColor('green');
-        // } else this.clues[3].changeColor('black');
-
-        // //clues[4]
-        // this.checkItemPair(2,this.pets,this.drinks, 4);
-
-        // //clues[5]
-        // if (this.whichHouse(this.people[2]) === 2) {
-        //     this.clues[5].changeColor('green');
-        // } else if (this.whichHouse(this.people[2]) < 2 || this.houses[2].hasAnyOf(this.people.slice(0,2))) {
-        //     this.clues[5].changeColor('red');
-        // } else this.clues[5].changeColor('black');
+        //clues[6]
+        if (this.colorHouse(this.colors[1]) ===  1 && [0,2].includes(this.colorHouse(this.colors[0]))) {
+            this.clues[6].changeColor('green');
+        } else if (!['white',this.colors[1]].includes(this.houses[1].color) || this.houses[3].color === this.colors[0]) {
+            this.clues[6].changeColor('red');
+        } else if (!['white',this.colors[0]].includes(this.houses[0].color) && !['white',this.colors[0]].includes(this.houses[2].color)) {
+            this.clues[6].changeColor('red');
+        } else if (this.colorHouse(this.colors[1])+1 && this.colorHouse(this.colors[1]) !==  1 ) {
+            this.clues[6].changeColor('red');
+        } else this.clues[6].changeColor('black');
+       
 
         // if (this.clues.filter(clue => clue.color === 'green').length === 6 && 
         //     this.whichHouse(this.drinks[1]) === 1 && 
