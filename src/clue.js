@@ -6,8 +6,8 @@ export default class Clue {
         this.clue
     }
 
-    draw(canvas) {
-        this.clue = new fabric.Text(this.text,{ fontSize: 13.5, fontFamily:'Helvetica Neue',left: this.pos[0], top: this.pos[1]})
+    draw(canvas,size) {
+        this.clue = new fabric.Text(this.text,{ fontSize: size, fontFamily:'Helvetica Neue',left: this.pos[0], top: this.pos[1]})
         canvas.add(this.clue);
         this.clue.set('selectable', false);
         this.clue.set('hoverCursor', "default");
